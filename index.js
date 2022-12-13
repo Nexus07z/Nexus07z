@@ -72,7 +72,7 @@ async function startNaze() {
     const naze = nazeConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
-        browser: ['YT NAZE','Safari','1.0.0'],
+        browser: ['Nexus Bot','Safari','1.0.0'],
         auth: state
     })
 
