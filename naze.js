@@ -3474,7 +3474,7 @@ let alfamart = `628111500959@s.whatsapp.net`
             break
 
             case 'ytplay': {
-                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday*`
+                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday Letra*`
                 if (!text) throw respuestacomando
                 let yts = require("yt-search")
                 let search = await yts(text)
@@ -3525,7 +3525,7 @@ let alfamart = `628111500959@s.whatsapp.net`
                         m.reply(`${global.mess.limm}`)
                     } else {
                         buffer = await getBuffer(segmento.result.link.link)
-                        naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mpeg', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
+                        naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3`, caption: `*${segmento.result.title}*\n`}, { quoted: m })
                     }
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
