@@ -3455,7 +3455,7 @@ let alfamart = `628111500959@s.whatsapp.net`
             break
                 
             case 'simplemenu': {
-                let simplemenu = `*${pushname}*\n\n${isPremium ? `*Eres un usuario premium sin límites*` : `*Te quedan ${db.data.users[m.sender].limit} de ${global.limitawal.free} comandos premium disponibles, se renuevan cada ${global.limitawal.resetcron} horas.*`}`
+                let simplemenu = `*${pushname}`
                 let sections = [
                     {
                         title: "∫ » LISTA DE MENUS « ✧",
