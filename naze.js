@@ -3494,7 +3494,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 	]
   },
 ]
-                naze.sendListMsg(m.chat, kukiw, nyoutube, `*${ucapanWaktu}*`, `Touch Me (⁠≧⁠▽⁠≦⁠)`, sections, fkontak)
+                naze.sendListMsg(m.chat, kukiw, nyoutube, `*${ucapanWaktu}*`, `Touch Me (⁠≧⁠▽⁠≦⁠)`, sections, m)
             }
             break
 
