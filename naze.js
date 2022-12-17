@@ -251,9 +251,9 @@ const sendStickerFromUrl = async(to, url) => {
 	    const fakestatus = {key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {})},message: { "imageMessage": {"url": "https://mmg.whatsapp.net/d/f/At0x7ZdIvuicfjlf9oWS6A3AR9XPh0P-hZIVPLsI70nM.enc","mimetype": "image/jpeg","caption": `${botname}`,"fileSha256": "+Ia+Dwib70Y1CWRMAP9QLJKjIJt54fKycOfB2OEZbTU=","fileLength": "28777","height": 1080,"width": 1079,"mediaKey": "vXmRR7ZUeDWjXy5iQk17TrowBzuwRya0errAFnXxbGc=","fileEncSha256": "sR9D2RS5JSifw49HeBADguI23fWDz1aZu4faWG/CyRY=","directPath": "/v/t62.7118-24/21427642_840952686474581_572788076332761430_n.enc?oh=3f57c1ba2fcab95f2c0bb475d72720ba&oe=602F3D69","mediaKeyTimestamp": "1610993486","jpegThumbnail": await reSize(thumb, 100, 100),"scansSidecar": "1W0XhfaAcDwc7xh1R8lca6Qg/1bB4naFCSngM2LKO2NoP5RI7K+zLw=="}}}
 		
 
-	    // resetear limite cada 12 horas
+	    // resetear limite  '*/5 * * * *' cada 5 minutos '0 */12 * * *' cada 12 horas https://crontab.guru/
         let cron = require('node-cron')
-        cron.schedule('1 * * * *', () => {
+        cron.schedule('*/5 * * * *', () => {
             let user = Object.keys(global.db.data.users)
             let limitUser = isPremium ? global.limitawal.premium : global.limitawal.free
             for (let jid of user) global.db.data.users[jid].limit = limitUser
@@ -3425,17 +3425,24 @@ let alfamart = `628111500959@s.whatsapp.net`
 
                 let creador = numcreador + '@s.whatsapp.net'
                 let me = m.sender
+                    if (m.isGroup) {
+                        let numsenderc = `@${me.split('@')[0]}`
+                        let numcreadorc = `@${me.split('@')[0]}`
+                    } else { 
+                        let numsenderc = `${me.split('@')[0]}`
+                        let numcreadorc = `${me.split('@')[0]}`
+                    }
                 let info = `
 ╭───「 𝙄𝙉𝙁𝙊 𝙐𝙎𝙐𝘼𝙍𝙄𝙊 」
 ├ *Nombre:* ${pushname}
-├ *Número/Tag:* @${me.split('@')[0]}
+├ *Número/Tag:* ${numsenderc}
 ├ *Premium:* ${isPremium ? '✔️' : `❌`}
 ├ *Límite:* ${isPremium ? 'Sin límites' : `${db.data.users[m.sender].limit} de ${global.limitawal.free} comandos premium\n│ cada ${global.limitawal.resetcron} horas.`}
 ╰───
 
 ╭───「 𝙄𝙉𝙁𝙊 𝘽𝙊𝙏 」
 ├ *Nombre del Bot:* ${botname}
-├ *Creador* : @${creador.split('@')[0]}
+├ *Creador* : ${numcreadorc}
 ├ *Modo:* ${naze.public ? 'Público' : `Privado`}
 ├ *Prefijo:* 「 ${prefix} 」
 ├ *Usos en total:* ${visitatotal}
@@ -3447,7 +3454,12 @@ let alfamart = `628111500959@s.whatsapp.net`
 ├ *Hora:* ${perut}
 ╰───
 `
-                naze.sendMessage(m.chat, { text: info, mentions: participants.map(a => a.id) }, {quoted: m})
+                
+                if (m.isGroup) {
+                    naze.sendMessage(m.chat, { text: info, mentions: participants.map(a => a.id) }, {quoted: m})
+                } else {
+                    naze.sendMessage(m.chat, { text: info }, {quoted: m})
+                }
             }
             break
                 
