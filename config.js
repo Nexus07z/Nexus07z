@@ -53,7 +53,7 @@ global.mess = {
     private: 'Fitur Digunakan Hanya Untuk Private Chat!',
     bot: 'Fitur Khusus Pengguna Nomor Bot',
     comandoespera: '*Espera un momento por favor...*',
-    comandodesconocido: `Lo siento, el comando no se encuentra en la programación.\n\nUtiliza el comando *${prefix}menu* para ver la lista de comandos.*`,
+    comandodesconocido: `*Lo siento, el comando no se encuentra en la programación.*\n\nUtiliza el comando *${prefix}menu* para ver la lista de comandos.`,
     etiquetaimg: 'Debes etiquetar una imagen con el comando: ',
     etiquetastick: 'Debes etiquetar un sticker con el comando: ',
     musicacomando: 'Falta agregar el nombre de la música dejando un espacio al lado del comando: ',
