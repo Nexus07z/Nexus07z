@@ -3426,11 +3426,11 @@ let alfamart = `628111500959@s.whatsapp.net`
                 let creador = numcreador + '@s.whatsapp.net'
                 let me = m.sender
                     if (m.isGroup) {
-                        let numsenderc = `@${me.split('@')[0]}`
-                        let numcreadorc = `@${me.split('@')[0]}`
+                        var numsenderc = `@${me.split('@')[0]}`
+                        var numcreadorc = `@${creador.split('@')[0]}`
                     } else { 
-                        let numsenderc = `${me.split('@')[0]}`
-                        let numcreadorc = `${me.split('@')[0]}`
+                        var numsenderc = `${me.split('@')[0]}`
+                        var numcreadorc = `${creador.split('@')[0]}`
                     }
                 let info = `
 ╭───「 𝙄𝙉𝙁𝙊 𝙐𝙎𝙐𝘼𝙍𝙄𝙊 」
