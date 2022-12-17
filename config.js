@@ -29,7 +29,7 @@ global.sessionName = 'nexusdev'
 global.jumlha = '999'
 global.jumhal = '100000000000000'
 global.jumlah = '1000000000'
-global.prefix = ['.']
+global.prefijo = ['!','.','#','&']
 global.sp = ''
 
 // Limit
