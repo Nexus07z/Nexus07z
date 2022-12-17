@@ -3430,7 +3430,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 ├ *Nombre:* ${pushname}
 ├ *Número/Tag:* @${me.split('@')[0]}
 ├ *Premium:* ${isPremium ? '✔️' : `❌`}
-├ *Límite:* ${isPremium ? 'Sin límites' : `${db.data.users[m.sender].limit} de ${global.limitawal.free} comandos premium\n│ cada ${global.limitawal.resetcron} horas.`}
+├ *Límite:* ${isPremium ? 'Sin límites' : `${global.limitawal.free} comandos premium\n│ cada ${global.limitawal.resetcron} horas.`}
 ╰───
 
 ╭───「 𝙄𝙉𝙁𝙊 𝘽𝙊𝙏 」
@@ -3443,7 +3443,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 ╰───
 
 ╭───「 𝙎𝙀𝙍𝙑𝙄𝘿𝙊𝙍 」
-│ *INICIADO EN:*
+│ *Iniciado en:*
 ├ *Fecha:* ${peruf1}
 ├ *Hora:* ${perut}
 ╰───
