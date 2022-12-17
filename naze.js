@@ -3502,7 +3502,7 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytmp3': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
-                await m.reply(mess.comandoespera)
+                naze.sendMessage(m.chat, { text: mess.comandoespera }, {quoted: m})
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
                     let [horas, minutos, segundos] = segmento.result.duration.split`:`
