@@ -48,7 +48,7 @@ global.mess = {
     owner: 'Fitur Khusus Owner Bot',
     ownerB: '[❗]\n*¡Este comando solo puede ser utilizado por el creador del Bot!*',
     group: '[❗]\n*¡Este comando solo puede ser utilizado en grupos!*',
-    grupo: '[❗] ALERTA\n\n*¡Este comando solo puede ser utilizado en grupos!*',
+    grupo: '[❗] *ALERTA*\n\n*¡Este comando solo puede ser utilizado en grupos!*',
     private: 'Fitur Digunakan Hanya Untuk Private Chat!',
     bot: 'Fitur Khusus Pengguna Nomor Bot',
     comandoespera: '*Espera un momento por favor...*',
