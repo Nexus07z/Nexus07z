@@ -3499,6 +3499,26 @@ let alfamart = `628111500959@s.whatsapp.net`
             }
             break
 
+            case 'ytmp3': {
+            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
+                if (!text) throw respuestacomando
+                await m.reply(mess.comandoespera)
+                try {
+                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
+                    let [horas, minutos, segundos] = segmento.result.duration.split`:`
+                    let mediatime = parseFloat(horas*3600) + parseFloat(minutos*60) + parseFloat(segundos)
+                    if (mediatime > 600) {
+                        m.reply(`${global.mess.limm}`)
+                    } else {
+                        buffer = await getBuffer(segmento.result.link.link)
+                        naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mp4' , fileName: `${segmento.result.title}.mp3` }, { quoted: m })
+                    }
+                } catch (e) {
+                m.reply(`${global.mess.error}`)
+                }
+            }
+            break
+
             case 'ytmp3sl': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
@@ -3506,27 +3526,7 @@ let alfamart = `628111500959@s.whatsapp.net`
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
                 buffer = await getBuffer(segmento.result.link.link)
-                naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mpeg', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytmp3': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                //await m.reply(mess.comandoespera)
-                try {
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
-                    let [horas, minutos, segundos] = segmento.result.duration.split`:`
-                    let mediatime = parseFloat(horas*3600) + parseFloat(minutos*60) + parseFloat(segundos)
-                    if (mediatime > 600) {
-                        m.reply(`${global.mess.limm}`)
-                    } else {
-                        buffer = await getBuffer(segmento.result.link.link)
-                        naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/aac' , fileName: `${segmento.result.title}.mp3`}, { quoted: m })
-                    }
+                naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
@@ -3536,24 +3536,43 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytaudio': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
-                //await m.reply(mess.comandoespera)
+                await m.reply(mess.comandoespera)
                 try {
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
-                naze.sendMessage(m.chat, { audio: { url: segmento.result.link.link }, mimetype: 'audio/mpeg', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
+                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
+                    let [horas, minutos, segundos] = segmento.result.duration.split`:`
+                    let mediatime = parseFloat(horas*3600) + parseFloat(minutos*60) + parseFloat(segundos)
+                    if (mediatime > 600) {
+                        m.reply(`${global.mess.limm}`)
+                    } else {
+                        naze.sendMessage(m.chat, { audio: { url: segmento.result.link.link }, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
+                    }
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
             }
             break
 
-            case 'ytaudio2': {
+            case 'ytaudiosl': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
-                
+                await m.reply(mess.comandoespera)
+                try {
+                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
+                naze.sendMessage(m.chat, { audio: { url: segmento.result.link.link }, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
+                } catch (e) {
+                m.reply(`${global.mess.error}`)
+                }
+            }
+            break
+
+            case 'ytmusic': {
+            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
+                if (!text) throw respuestacomando
+                await m.reply(mess.comandoespera)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${global.apilol}&url=${text}`)
                 buffer = await getBuffer(segmento.result.link)
-                naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mpeg', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
+                naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
@@ -3563,11 +3582,30 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytmp4': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
-            
+                await m.reply(mess.comandoespera)
+                try {
+                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo?apikey=${global.apilol}&url=${text}`)
+                    let [horas, minutos, segundos] = segmento.result.duration.split`:`
+                    let mediatime = parseFloat(horas*3600) + parseFloat(minutos*60) + parseFloat(segundos)
+                    if (mediatime > 600) {
+                        m.reply(`${global.mess.limm}`)
+                    } else {
+                        buffer = await getBuffer(segmento.result.link.link)
+                        naze.sendMessage(m.chat, { video: buffer, mimetype: 'video/mp4', fileName: `${segmento.result.title}.mp4` , caption: `*${segmento.result.title}*\n`}, { quoted: m })
+                    }
+                } catch (e) {
+                m.reply(`${global.mess.error}`)
+                }
+            }
+            break
+
+            case 'ytmp4sl': {
+            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
+                if (!text) throw respuestacomando
+                await m.reply(mess.comandoespera)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo?apikey=${global.apilol}&url=${text}`)
-                buffer = await getBuffer(segmento.result.link.link)
-                naze.sendMessage(m.chat, { video: buffer, mimetype: 'video/mp4', fileName: `${segmento.result.title}.mp4` , caption: `*${segmento.result.title}*\n`}, { quoted: m })
+                naze.sendMessage(m.chat, { video: { url: segmento.result.link.link }, mimetype: 'video/mp4', fileName: `${segmento.result.title}.mp4` , caption: `*${segmento.result.title}*\n`}, { quoted: m })
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
@@ -3577,10 +3615,10 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytvideo': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
-            
+                await m.reply(mess.comandoespera)
                 try {
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo?apikey=${global.apilol}&url=${text}`)
-                naze.sendMessage(m.chat, { video: { url: segmento.result.link.link }, mimetype: 'video/mp4', fileName: `${segmento.result.title}.mp4` , caption: `*${segmento.result.title}*\n`}, { quoted: m })
+                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo2?apikey=${global.apilol}&url=${text}`)
+                naze.sendMessage(m.chat, { video: { url: segmento.result.link }, mimetype: 'video/mp4', fileName: `${segmento.result.title}.mp4` , caption: `*${segmento.result.title}*\n`}, { quoted: m })
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
