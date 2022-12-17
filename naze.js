@@ -3474,8 +3474,8 @@ let alfamart = `628111500959@s.whatsapp.net`
                 naze.sendListMsg(m.chat, simplemenu, piemsj,`*${saludo}*`, `LISTA DE MENUS`, sections, m)
             }
             break
-
-            case 'comandos': {
+           
+            case 'menu': case 'comandos': {
                 
                 let Menu = `
 ╭─ *INICIO LISTA DE MENUS*
@@ -3494,7 +3494,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 │
 ╰─ *FIN LISTA DE MENUS*
 ` 
-                naze.sendMessage(m.chat, { text: Menu }, {quoted: fkontak})
+                naze.sendMessage(m.chat, { text: Menu }, {quoted: m})
             }
             break
 
@@ -3506,7 +3506,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 ├「 *YouTube* 」
 │
 ├ *${prefix}ytplay* [nombre de la canción]
-│ Descarga un audio de youtube.
+│ Descarga un audio o video de youtube.
 │
 ├ *${prefix}ytsearch* [nombre de la canción]
 │ Muestra una lista de links de youtube.
@@ -3584,8 +3584,9 @@ let alfamart = `628111500959@s.whatsapp.net`
             }
             break
 
-            case 'play': {
-                if (!text) throw `Example : ${prefix + command} story wa anime`
+            case 'ytplay': {
+                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday*`
+                if (!text) throw respuestacomando
                 let yts = require("yt-search")
                 let search = await yts(text)
                 let segmento = search.videos[Math.floor(Math.random() * search.videos.length)]
@@ -3626,7 +3627,7 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytmp3': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
-                
+                //await m.reply(mess.comandoespera)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
                     let [horas, minutos, segundos] = segmento.result.duration.split`:`
@@ -3646,7 +3647,7 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytaudio': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
-                
+                //await m.reply(mess.comandoespera)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
                 naze.sendMessage(m.chat, { audio: { url: segmento.result.link.link }, mimetype: 'audio/mpeg', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
