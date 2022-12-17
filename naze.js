@@ -3422,27 +3422,20 @@ let alfamart = `628111500959@s.whatsapp.net`
             break
 
             case 'info': {
-
+                if (!m.isGroup) throw mess.group   
                 let creador = numcreador + '@s.whatsapp.net'
                 let me = m.sender
-                    if (m.isGroup) {
-                        var numsenderc = `@${me.split('@')[0]}`
-                        var numcreadorc = `@${creador.split('@')[0]}`
-                    } else { 
-                        var numsenderc = `${me.split('@')[0]}`
-                        var numcreadorc = `${creador.split('@')[0]}`
-                    }
                 let info = `
 ╭───「 𝙄𝙉𝙁𝙊 𝙐𝙎𝙐𝘼𝙍𝙄𝙊 」
 ├ *Nombre:* ${pushname}
-├ *Número/Tag:* ${numsenderc}
+├ *Número/Tag:* @${me.split('@')[0]}
 ├ *Premium:* ${isPremium ? '✔️' : `❌`}
 ├ *Límite:* ${isPremium ? 'Sin límites' : `${db.data.users[m.sender].limit} de ${global.limitawal.free} comandos premium\n│ cada ${global.limitawal.resetcron} horas.`}
 ╰───
 
 ╭───「 𝙄𝙉𝙁𝙊 𝘽𝙊𝙏 」
 ├ *Nombre del Bot:* ${botname}
-├ *Creador* : ${numcreadorc}
+├ *Creador* : @${creador.split('@')[0]}
 ├ *Modo:* ${naze.public ? 'Público' : `Privado`}
 ├ *Prefijo:* 「 ${prefix} 」
 ├ *Usos en total:* ${visitatotal}
@@ -3450,16 +3443,12 @@ let alfamart = `628111500959@s.whatsapp.net`
 ╰───
 
 ╭───「 𝙎𝙀𝙍𝙑𝙄𝘿𝙊𝙍 」
+│ *INICIADO EN:*
 ├ *Fecha:* ${peruf1}
 ├ *Hora:* ${perut}
 ╰───
-`
-                
-                if (m.isGroup) {
-                    naze.sendMessage(m.chat, { text: info, mentions: participants.map(a => a.id) }, {quoted: m})
-                } else {
-                    naze.sendMessage(m.chat, { text: info }, {quoted: m})
-                }
+`   
+                naze.sendMessage(m.chat, { text: info, mentions: participants.map(a => a.id) }, {quoted: m})           
             }
             break
                 
