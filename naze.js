@@ -3422,7 +3422,7 @@ let alfamart = `628111500959@s.whatsapp.net`
             break
 
             case 'info': {
-                if (!m.isGroup) throw mess.group   
+                if (!m.isGroup) throw mess.grupo   
                 let creador = numcreador + '@s.whatsapp.net'
                 let me = m.sender
                 let info = `
