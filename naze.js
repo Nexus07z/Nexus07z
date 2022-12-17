@@ -4626,7 +4626,7 @@ _Donasi Ngab_\n_Jangan Ngarep Free Mulu_`
 
             default:
                 if (isCmd) {
-                    reply(`Lo siento, el comando *${prefix + command}* no se encuentra en la programación.\n\nUtiliza el comando *${prefix}menu* para ver la lista de comandos.`)
+                    await m.reply(mess.comandodesconocido)
                 }
                 
                 if (budy.startsWith('=>')) {
