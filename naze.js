@@ -3455,7 +3455,7 @@ let alfamart = `628111500959@s.whatsapp.net`
             break
                 
             case 'simplemenu': {
-                let simplemenu = `*${pushname}`
+                let simplemenu = `*${pushname}*\n\n${isPremium ? `*Eres un usuario premium sin límites*` : `*Te quedan ${db.data.users[m.sender].limit} de ${global.limitawal.free} comandos premium disponibles, se renuevan cada ${global.limitawal.resetcron} horas.*`}`
                 let sections = [
                     {
                         title: "∫ » LISTA DE MENUS « ✧",
@@ -3488,7 +3488,7 @@ let alfamart = `628111500959@s.whatsapp.net`
                         ]
                     },
                 ]
-                naze.sendListMsg(m.chat, simplemenu, `*${saludo}*`, `LISTA DE MENUS`, sections, m)
+                naze.sendListMsg(m.chat, simplemenu, piemsj,`*${saludo}*`, `LISTA DE MENUS`, sections, m)
             }
             break
 
