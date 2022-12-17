@@ -29,7 +29,7 @@ global.sessionName = 'nexusdev'
 global.jumlha = '999'
 global.jumhal = '100000000000000'
 global.jumlah = '1000000000'
-global.prefijo = ['!','.','#','&']
+global.prefix = ['.']
 global.sp = ''
 
 // Limit
@@ -53,7 +53,7 @@ global.mess = {
     private: 'Fitur Digunakan Hanya Untuk Private Chat!',
     bot: 'Fitur Khusus Pengguna Nomor Bot',
     comandoespera: '*Espera un momento por favor...*',
-    comandodesconocido: `*Lo siento, el comando no se encuentra en la programación.*\n\nUtiliza el comando *menu* para ver la lista de comandos.`,
+    comandodesconocido: `*Lo siento, el comando no se encuentra en la programación.*\n\nUtiliza el comando *${prefix}menu* para ver la lista de comandos.`,
     etiquetaimg: 'Debes etiquetar una imagen con el comando: ',
     etiquetastick: 'Debes etiquetar un sticker con el comando: ',
     musicacomando: 'Falta agregar el nombre de la música dejando un espacio al lado del comando: ',
@@ -65,7 +65,7 @@ global.mess = {
     error: '*Ocurrió un problema, puedes intentarlo nuevamente más tarde.*',
     errapi: 'Error Mungkin Apikey Tidak Valid!',
     errmor: 'Error Kesalahan Sistem',
-    endLimit: `[❗] *ALERTA*\n\n*No puedes usar este comando premium.*\n\nHas llegado al *límite de comandos premium* que tu *usuario gratuito* puede usar.\n\nTu usuario tiene un límite de uso de ${global.limitawal.free} comandos premium cada ${global.limitawal.resetcron} horas, este límite se restablece cada 12 horas.\n\nPara monitorear cuantos comandos premium tienes disponibles usa el siguiente comando:\n\n*limite*\n\nSi te conviertes en *usuario premium* puedes usar los comandos premium *sin limitaciones* en el tiempo que dure tu suscripción.\n\nPara convertirte en usuario premium puedes consultar el siguiente comando:\n\n*premium*\n`,
+    endLimit: `[❗] *ALERTA*\n\n*No puedes usar este comando premium.*\n\nHas llegado al *límite de comandos premium* que tu *usuario gratuito* puede usar.\n\nTu usuario tiene un límite de uso de ${global.limitawal.free} comandos premium cada ${global.limitawal.resetcron} horas, este límite se restablece cada 12 horas.\n\nPara monitorear cuantos comandos premium tienes disponibles usa el siguiente comando:\n\n*${prefix}limite*\n\nSi te conviertes en *usuario premium* puedes usar los comandos premium *sin limitaciones* en el tiempo que dure tu suscripción.\n\nPara convertirte en usuario premium puedes consultar el siguiente comando:\n\n*${prefix}premium*\n`,
 }
 
 // Fake
