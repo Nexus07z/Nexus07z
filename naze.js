@@ -3525,7 +3525,7 @@ let alfamart = `628111500959@s.whatsapp.net`
                         m.reply(`${global.mess.limm}`)
                     } else {
                         buffer = await getBuffer(segmento.result.link.link)
-                        naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mp4' }, { quoted: m , fileName: `${segmento.result.title}.mp3`})
+                        naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/aac' , fileName: `${segmento.result.title}.mp3`}, { quoted: m })
                     }
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
