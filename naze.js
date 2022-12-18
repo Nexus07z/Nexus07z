@@ -3386,7 +3386,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 ├ *${prefix}ytplay* [nombre de la canción]
 │ Descarga un audio o video de youtube.
 │
-├ *${prefix}ytsearch* [nombre de la canción]  xd
+├ *${prefix}ytsearch* [nombre de la canción]
 │ Muestra una lista de links de youtube.
 │ 
 ├ *${prefix}ytmp3* [link de youtube]
@@ -3502,7 +3502,7 @@ let alfamart = `628111500959@s.whatsapp.net`
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&query=${text}`)
                     segmento = segmento.result
-                    let ytsearch = '*Búsqueda en Youtube*\n\n*Resultados para '+text+'*\n\n'
+                    let ytsearch = '*Búsqueda en Youtube*\n\n*Resultados para: '+text+'*\n\n'
                     let no = 1
                     for (var i of segmento) {
                         ytsearch += `⭔ Nº: ${no++}\n⭔ Titulo: ${i.title}\n⭔ ID Youtube: : ${i.videoId}\n⭔ Link: https://youtu.be/${i.videoId} \n\n─────────────────\n\n`
