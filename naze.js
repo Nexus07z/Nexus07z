@@ -2170,18 +2170,7 @@ break
             await naze.sendButtonText(m.chat, buttons, akhji, nyoutube, m, {mentions: ments})
             }
             break
-	    case 'yts': case 'ytsearch': {
-                if (!text) throw `Example : ${prefix + command} story wa anime`
-                let yts = require("yt-search")
-                let search = await yts(text)
-                let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
-                let no = 1
-                for (let i of search.all) {
-                    teks += `⭔ No : ${no++}\n⭔ Type : ${i.type}\n⭔ Video ID : ${i.videoId}\n⭔ Title : ${i.title}\n⭔ Views : ${i.views}\n⭔ Duration : ${i.timestamp}\n⭔ Upload At : ${i.ago}\n⭔ Author : ${i.author.name}\n⭔ Url : ${i.url}\n\n─────────────────\n\n`
-                }
-                naze.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
-            }
-            break
+	    
         case 'google': {
                 if (!text) throw `Example : ${prefix + command} fatih arridho`
                 let google = require('google-it')
@@ -3397,15 +3386,24 @@ let alfamart = `628111500959@s.whatsapp.net`
 ├ *${prefix}ytplay* [nombre de la canción]
 │ Descarga un audio o video de youtube.
 │
-├ *${prefix}ytsearch* [nombre de la canción]
+├ *${prefix}ytsearch* [nombre de la canción]  xd
 │ Muestra una lista de links de youtube.
 │ 
 ├ *${prefix}ytmp3* [link de youtube]
 │ Descarga un audio de youtube.
 │ 
+├ *${prefix}ytaudio* [link de youtube]
+│ Descarga un audio de youtube.
+│ 
+├ *${prefix}ytmusic* [link de youtube]
+│ Descarga un audio de youtube.
+│ 
 ├ *${prefix}ytmp4* [link de youtube]
 │ Descarga un video de youtube.
 │
+├ *${prefix}ytvideo* [link de youtube]
+│ Descarga un video de youtube.
+│ 
 ├「 *TikTok* 」
 │
 ├ *${prefix}tiktok* [link de tiktok]
@@ -3496,6 +3494,38 @@ let alfamart = `628111500959@s.whatsapp.net`
                     headerType: 4
                 }
                 naze.sendMessage(m.chat, buttonMessage, { quoted: m })
+            }
+            break
+
+            case 'ytsearch': {
+                if (!text) throw `Example : ${prefix + command} story wa anime`
+
+
+                try {
+                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&url=${text}`)
+                    segmento = segmento.result
+                    let ytsearch = 'YouTube Search\n\n Result From '+text+'\n\n'
+                    let no = 1
+                    for (let i of segmento) {
+                        ytsearch += `⭔ No : ${no++}\n⭔ Title : ${i.title}\n⭔ Video ID : ${i.videoId}\n⭔ Link : https://youtu.be/${i.videoId} \n\n─────────────────\n\n`
+                    }
+                    naze.sendMessage(m.chat, { image: { url: segmento[0].thumbnail }, caption: ytsearch }, { quoted: m })
+                } catch (e) {
+                m.reply(`${global.mess.error}`)
+                }
+            }
+            break
+            
+            case 'yts': {
+                if (!text) throw `Example : ${prefix + command} story wa anime`
+                let yts = require("yt-search")
+                let search = await yts(text)
+                let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
+                let no = 1
+                for (let i of search.all) {
+                    teks += `⭔ No : ${no++}\n⭔ Type : ${i.type}\n⭔ Video ID : ${i.videoId}\n⭔ Title : ${i.title}\n⭔ Views : ${i.views}\n⭔ Duration : ${i.timestamp}\n⭔ Upload At : ${i.ago}\n⭔ Author : ${i.author.name}\n⭔ Url : ${i.url}\n\n─────────────────\n\n`
+                }
+                naze.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
             }
             break
 
