@@ -3503,12 +3503,13 @@ let alfamart = `628111500959@s.whatsapp.net`
 
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&url=${text}`)
+                    segmento = segmento.result
                     let ytsearch = 'YouTube Search\n\n Result From '+text+'\n\n'
                     let no = 1
-                    for (let i of segmento.result) {
-                        ytsearch += `⭔ No : ${no++}\n⭔ Title : ${i.title}\n⭔ Video ID : ${i.videoId}\n⭔ Link : https://youtu.be/${i.videoId} \n\n─────────────────\n\n`
+                    for (var x of segmento) {
+                        ytsearch += `⭔ No : ${no++}\n⭔ Title : ${x.title}\n⭔ Video ID : ${x.videoId}\n⭔ Link : https://youtu.be/${x.videoId} \n\n─────────────────\n\n`
                     }
-                    naze.sendMessage(m.chat, { image: { url: segmento.result[0].thumbnail }, caption: ytsearch }, { quoted: m })
+                    naze.sendMessage(m.chat, { text: ytsearch }, { quoted: m })
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
