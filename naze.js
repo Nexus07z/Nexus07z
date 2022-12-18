@@ -3502,7 +3502,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 
 
                 try {
-                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&url=${text}`)
+                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&query=${text}`)
                     segmento = segmento.result
                     let ytsearch = 'YouTube Search\n\n Result From '+text+'\n\n'
                     let no = 1
