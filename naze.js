@@ -3499,17 +3499,15 @@ let alfamart = `628111500959@s.whatsapp.net`
 
             case 'ytsearch': {
                 if (!text) throw `Example : ${prefix + command} story wa anime`
-
-
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&query=${text}`)
                     segmento = segmento.result
-                    let ytsearch = 'YouTube Search\n\n Result From '+text+'\n\n'
+                    let ytsearch = '*Búsqueda en Youtube*\n\n*Resultados para '+text+'*\n\n'
                     let no = 1
-                    for (var x of segmento) {
-                        ytsearch += `⭔ No : ${no++}\n⭔ Title : ${x.title}\n⭔ Video ID : ${x.videoId}\n⭔ Link : https://youtu.be/${x.videoId} \n\n─────────────────\n\n`
+                    for (var i of segmento) {
+                        ytsearch += `⭔ Nº: ${no++}\n⭔ Titulo: ${i.title}\n⭔ ID Youtube: : ${i.videoId}\n⭔ Link: https://youtu.be/${i.videoId} \n\n─────────────────\n\n`
                     }
-                    naze.sendMessage(m.chat, { text: ytsearch }, { quoted: m })
+                    naze.sendMessage(m.chat, { image: { url: segmento[0].thumbnail },  caption: ytsearch }, { quoted: m })
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
