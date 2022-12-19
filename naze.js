@@ -3531,7 +3531,8 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytmp3': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
-                if (!isUrl(args[0]) && !args[0].includes('youtu.be')) throw mess.linkyt
+                if (!isUrl(text)) throw respuestacomando
+                if (!text.includes('youtu.be')) throw mess.linkyt
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
