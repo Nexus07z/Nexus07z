@@ -3553,6 +3553,8 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytmp3sl': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
+                if (!isUrl(text)) throw respuestacomando
+                if (!text.includes('youtu.be')) throw mess.linkyt
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
@@ -3567,6 +3569,8 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytaudio': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
+                if (!isUrl(text)) throw respuestacomando
+                if (!text.includes('youtu.be')) throw mess.linkyt
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
@@ -3586,6 +3590,8 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytaudiosl': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
+                if (!isUrl(text)) throw respuestacomando
+                if (!text.includes('youtu.be')) throw mess.linkyt
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
@@ -3599,6 +3605,8 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytmusic': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
+                if (!isUrl(text)) throw respuestacomando
+                if (!text.includes('youtu.be')) throw mess.linkyt
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${global.apilol}&url=${text}`)
@@ -3613,6 +3621,8 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytmp4': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
+                if (!isUrl(text)) throw respuestacomando
+                if (!text.includes('youtu.be')) throw mess.linkyt
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo?apikey=${global.apilol}&url=${text}`)
@@ -3633,6 +3643,8 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytmp4sl': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
+                if (!isUrl(text)) throw respuestacomando
+                if (!text.includes('youtu.be')) throw mess.linkyt
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo?apikey=${global.apilol}&url=${text}`)
@@ -3646,6 +3658,8 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'ytvideo': {
             	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
                 if (!text) throw respuestacomando
+                if (!isUrl(text)) throw respuestacomando
+                if (!text.includes('youtu.be')) throw mess.linkyt
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo2?apikey=${global.apilol}&url=${text}`)
@@ -3654,6 +3668,14 @@ let alfamart = `628111500959@s.whatsapp.net`
                 m.reply(`${global.mess.error}`)
                 }
             }
+            break
+
+            case 'music?': {
+                if (!quoted) throw `falta etiqueta`
+                if (!/audio/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
+                naze.sendText(m.chat, mess.comandoespera, m)
+            }
+            
             break
 
         
