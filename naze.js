@@ -3674,8 +3674,27 @@ let alfamart = `628111500959@s.whatsapp.net`
                 if (!quoted) throw `falta etiqueta`
                 if (!/audio/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
                 naze.sendText(m.chat, mess.comandoespera, m)
+                let media = await naze.downloadAndSaveMediaMessage(quoted)
+                try {
+                    var form = new FormData();
+                    var stats = fs.statSync(media);
+                    var fileSizeInBytes = stats.size;
+                    var fileStream = fs.createReadStream(media);
+                    form.append('file', fileStream, { knownLength: fileSizeInBytes });
+                    var options = {
+                        method: 'POST',
+                        credentials: 'include',
+                        body: form
+                    }
+                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=${global.apilol}`, {...options })
+                    fs.unlinkSync(media)
+                    segmento = segmento.result
+                    let musicr = `*Artista/Grupo:* ${get_result.artists}\n\n*Tema:* ${get_result.title}\n\n*Álbum:* ${get_result.album}\n\n*Géneros:* ${get_result.genres}`
+                    naze.sendText(m.chat, musicr, m)
+                } catch (e) {
+                    m.reply(`${global.mess.error}`)
+                    }
             }
-            
             break
 
         
