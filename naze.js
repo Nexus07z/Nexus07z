@@ -3497,8 +3497,9 @@ let alfamart = `628111500959@s.whatsapp.net`
             }
             break
 
-            case 'ytsearch': {
-                if (!text) throw `Example : ${prefix + command} story wa anime`
+            case 'ytsearch2': {
+                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday Letra*`
+                if (!text) throw respuestacomando
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&query=${text}`)
                     segmento = segmento.result
@@ -3514,14 +3515,15 @@ let alfamart = `628111500959@s.whatsapp.net`
             }
             break
 
-            case 'ytsearch2': {
-                if (!text) throw `Example : ${prefix + command} story wa anime`
+            case 'ytsearch': {
+                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday Letra*`
+                if (!text) throw respuestacomando
                 let yts = require("yt-search")
                 let search = await yts(text)
                 let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
                 let no = 1
                 for (let i of search.all) {
-                    teks += `⭔ No : ${no++}\n⭔ Type : \n⭔ Video ID : ${i.videoId}\n⭔ Title : ${i.title}\n⭔ Views : ${i.views}\n⭔ Duration : ${i.timestamp}\n⭔ Upload At : \n⭔ Author : \n⭔ Url : ${i.url}\n\n─────────────────\n\n`
+                    teks += `⭔ Nº: ${no++}\n⭔ Type : ${i.type}\n⭔ Video ID : ${i.videoId}\n⭔ Title : ${i.title}\n⭔ Views : ${i.views}\n⭔ Duration : ${i.timestamp}\n⭔ Link : ${i.url}\n\n─────────────────\n\n`
                 }
                 naze.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
             }
