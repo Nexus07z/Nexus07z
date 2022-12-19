@@ -3675,9 +3675,9 @@ let alfamart = `628111500959@s.whatsapp.net`
                 if (!/audio/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
                 naze.sendText(m.chat, mess.comandoespera, m)
                 try {       
-                    let { TelegraPh } = require('./lib/uploader')
+                    let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
                     let cargador = await naze.downloadAndSaveMediaMessage(quoted)
-                    let link = await TelegraPh(cargador)
+                    let link = await UploadFileUgu(cargador)
                     //let contenido = `https://api.lolhuman.xyz/api/musicsearch?apikey=${global.apilol}&file=${link}`
                     let musicr = `*Artista/Grupo:* ${contenido.artists}\n\n*Tema:* ${contenido.title}\n\n*Álbum:* ${contenido.album}\n\n*Géneros:* ${contenido.genres}`
                     naze.sendText(m.chat, link, m)
