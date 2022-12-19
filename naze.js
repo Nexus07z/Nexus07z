@@ -3522,8 +3522,8 @@ let alfamart = `628111500959@s.whatsapp.net`
                 let search = await yts(text)
                 let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
                 let no = 1
-                for (let i of search.all) {
-                    teks += `⭔ Nº: ${no++}\n⭔ Type : ${i.type}\n⭔ Video ID : ${i.videoId}\n⭔ Title : ${i.title}\n⭔ Views : ${i.views}\n⭔ Duration : ${i.timestamp}\n⭔ Link : ${i.url}\n\n─────────────────\n\n`
+                for (let i of search.videos) {
+                    teks += `⭔ Nº: ${no++}\n⭔ Video ID : ${i.videoId}\n⭔ Title : ${i.title}\n⭔ Duration : ${i.timestamp}\n⭔ Link : ${i.url}\n\n─────────────────\n\n`
                 }
                 naze.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
             }
