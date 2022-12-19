@@ -3487,13 +3487,26 @@ let alfamart = `628111500959@s.whatsapp.net`
 *Titulo:* ${segmento.title}\n
 *ID Youtube:* ${segmento.videoId}\n
 *Duración:* ${segmento.timestamp}\n
-*Vistas:* ${segmento.views}\n
-*Url :* ${segmento.url}\n`,
+*Link:* ${segmento.url}\n`,
                     
                     buttons: buttons,
                     headerType: 4
                 }
                 naze.sendMessage(m.chat, buttonMessage, { quoted: m })
+            }
+            break
+
+            case 'ytsearch': {
+                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday Letra*`
+                if (!text) throw respuestacomando
+                let yts = require("yt-search")
+                let search = await yts(text)
+                let ytsearch = '*Búsqueda en Youtube*\n\n*Resultados para: '+text+'*\n\n'
+                let no = 1
+                for (let i of search.videos) {
+                    ytsearch += `⭔ Nº: ${no++}\n⭔ Titulo: ${i.title}\n⭔ ID Youtube: ${i.videoId}\n⭔ Duración: ${i.timestamp}\n⭔ Link: ${i.url}\n\n─────────────────\n\n`
+                }
+                naze.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: ytsearch }, { quoted: m })
             }
             break
 
@@ -3503,29 +3516,15 @@ let alfamart = `628111500959@s.whatsapp.net`
                 try {
                     segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&query=${text}`)
                     segmento = segmento.result
-                    let ytsearch = '*Búsqueda en Youtube*\n\n*Resultados para: '+text+'*\n\n'
+                    let ytsearch2 = '*Búsqueda en Youtube*\n\n*Resultados para: '+text+'*\n\n'
                     let no = 1
                     for (var i of segmento) {
-                        ytsearch += `⭔ Nº: ${no++}\n⭔ Titulo: ${i.title}\n⭔ ID Youtube: : ${i.videoId}\n⭔ Link: https://youtu.be/${i.videoId} \n\n─────────────────\n\n`
+                        ytsearch2 += `⭔ Nº: ${no++}\n⭔ Titulo: ${i.title}\n⭔ ID Youtube: ${i.videoId}\n⭔ Link: https://youtu.be/${i.videoId} \n\n─────────────────\n\n`
                     }
-                    naze.sendMessage(m.chat, { image: { url: segmento[0].thumbnail },  caption: ytsearch }, { quoted: m })
+                    naze.sendMessage(m.chat, { image: { url: segmento[0].thumbnail },  caption: ytsearch2 }, { quoted: m })
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
-            }
-            break
-
-            case 'ytsearch': {
-                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday Letra*`
-                if (!text) throw respuestacomando
-                let yts = require("yt-search")
-                let search = await yts(text)
-                let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
-                let no = 1
-                for (let i of search.videos) {
-                    teks += `⭔ Nº: ${no++}\n⭔ Video ID : ${i.videoId}\n⭔ Title : ${i.title}\n⭔ Duration : ${i.timestamp}\n⭔ Link : ${i.url}\n\n─────────────────\n\n`
-                }
-                naze.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
             }
             break
 
