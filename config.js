@@ -59,6 +59,7 @@ global.mess = {
     musicacomando: 'Falta agregar el nombre de la música dejando un espacio al lado del comando: ',
     textocomando: 'Falta agregar texto dejando un espacio al lado del siguiente comando: ',
     linkcomando: 'Falta agregar el link dejando un espacio al lado del comando: ',
+    linkyt: '*El link tiene que ser de youtube.*',
     etiquetaimgvidl: 'Debes etiquetar una imagen o un video con una duración máxima de 10 segundos con el comando: ',
     limm: '*La duración máxima permitida es de 10 minutos.*',
     lims: '*La duración máxima permitida es de 10 segundos.*',
