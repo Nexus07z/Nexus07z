@@ -3678,26 +3678,10 @@ let alfamart = `628111500959@s.whatsapp.net`
                 if (!quoted) throw `falta etiqueta`
                 if (!/audio/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
                 naze.sendText(m.chat, mess.comandoespera, m)
-                let filePath = await naze.downloadAndSaveMediaMessage(quoted)
-                try {       
-                    let form = new BodyForm()
-                    var stats = fs.statSync(filePath)
-                    var fileSizeInBytes = stats.size
-                    var fileStream = fs.createReadStream(filePath)
-                    form.append('file', fileStream, { knownLength: fileSizeInBytes })
-                    var options = {
-                        method: 'POST',
-                        credentials: 'include',
-                        body: form
-                    }
-                    get_result = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=${global.apilol}`, {...options })
-                    fs.unlinkSync(filePath)
-                    get_result = get_result.result
-                    m.reply(`*Artista/Grupo:* ${get_result.artists}\n\n*Tema:* ${get_result.title}\n\n*Álbum:* ${get_result.album}\n\n*Géneros:* ${get_result.genres}`)
+                let media = await naze.downloadAndSaveMediaMessage(quoted)
+                m.reply(`${media}`)
                     
-                } catch (e) {
-                m.reply(`errorxd`)
-                }
+                
                 
             }
             break
