@@ -2115,7 +2115,7 @@ break
                 let media = await naze.downloadAndSaveMediaMessage(quoted)
                 
                     let anu = await UploadFileUgu(media)
-                    m.reply(util.format(anu))
+                    m.reply(anu.title)
             
                 await fs.unlinkSync(media)
             }
@@ -3674,22 +3674,10 @@ let alfamart = `628111500959@s.whatsapp.net`
             case 'music?': {
                 
                 naze.sendText(m.chat, mess.comandoespera, m)
-                let { TelegraPh } = require('./lib/uploader')
+                let { floNime } = require('./lib/uploader')
                 let media = await naze.downloadAndSaveMediaMessage(quoted)
-                //let mee = await naze.downloadAndSaveMediaMessage(qmsg)
-                let mee2 = await naze.downloadAndSaveMediaMessage(quoted)
-                //let mem = await TelegraPh(mee)
-                let mem2 = await TelegraPh(mee2)
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=4fda13ee5ed767eef2174d23&file=${media}`)
-                await naze.sendMessage(m.chat, { audio: { url: media } }, { quoted: m }).catch((err) => fs.unlinkSync(media))
-                
-        
-                m.reply(`${media}`)
-                //m.reply(`mem ${mem}`)
-                m.reply(`mem2 ${mem2}`)
-                
-                    
-                
+                let anu = await floNime(media)
+                m.reply(anu)
                 
             }
             break
