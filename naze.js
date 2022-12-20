@@ -22,10 +22,6 @@ const util = require('util')
 const path = require('path')
 const hx = require('hxz-api')
 const axios = require('axios')
-let BodyForm = require('form-data')
-let { fromBuffer } = require('file-type')
-let fetch = require('node-fetch')
-let cheerio = require('cheerio')
 const chalk = require('chalk')
 const yts = require('yt-search')
 const xfar = require('xfarr-api')
@@ -45,32 +41,39 @@ const speed = require('performance-now')
 const { performance } = require('perf_hooks')
 const { Primbon } = require('scrape-primbon')
 const primbon = new Primbon()
-const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, runtime2, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, getGroupAdmins } = require('./lib/myfunc')
-moment.locale('es');
-const peruf1 = moment.tz('America/Lima').format('dddd, DD MMMM YYYY')
-const peruf2 = moment.tz('America/Lima').format('DD MMMM YYYY')
-const perut = moment.tz('America/Lima').format('HH:mm:ss')
-const piemsj = ('')
+const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, getGroupAdmins } = require('./lib/myfunc')
+
+const hariini = moment.tz('Asia/Jakarta').format('dddd, DD MMMM YYYY')
+const hariiini = moment.tz('Asia/Jakarta').format('DD MMMM YYYY')
+const barat = moment.tz('Asia/Jakarta').format('HH:mm:ss')
+const tengah = moment.tz('Asia/Makassar').format('HH:mm:ss')
+const timur = moment.tz('Asia/Jayapura').format('HH:mm:ss')
 const nyoutube = ('© Naze\nYoutube/Sc :\nhttps://youtube.com/c/Nazedev')  //ubah di config biar ngk emror
+const ini_mark = `0@s.whatsapp.net`
 const ownernya = ownernomer + '@s.whatsapp.net'
-const creadoruser = numcreador + '@s.whatsapp.net'
-const premium = JSON.parse(fs.readFileSync('./database/premium.json'))
 global.prem = require("./lib/premium")
-gambar = fs.readFileSync('./media/image/assistant.jpg')
+gambar = fs.readFileSync('./media/image/naze.jpg')
 
 //TIME
-const time2 = moment().tz('America/Lima').format('HH:mm:ss')  
+const time2 = moment().tz('Asia/Jakarta').format('HH:mm:ss')  
  if(time2 < "23:59:00"){
-var ucapanWaktu = 'Buenas noches 🌌'
+var ucapanWaktu = 'Selamat Malam 🌌'
+ }
+ if(time2 < "19:00:00"){
+var ucapanWaktu = 'Selamat Sore 🌃'
  }
  if(time2 < "18:00:00"){
-var ucapanWaktu = 'Buenas tardes 🌅'
+var ucapanWaktu = 'Selamat Sore 🌅'
  }
- if(time2 < "12:00:00"){
-var ucapanWaktu = 'Buenos dias 🌄'
-var saludo = '¡Buenos días! 🌄'
+ if(time2 < "15:00:00"){
+var ucapanWaktu = 'Selamat Siang 🏙'
  }
-  
+ if(time2 < "11:00:00"){
+var ucapanWaktu = 'Selamat Pagi 🌄'
+ }
+ if(time2 < "05:00:00"){
+var ucapanWaktu = 'Selamat Pagi 🌉'
+ } 
  
 // read database
 let tebaklagu = db.data.game.tebaklagu = []
@@ -87,11 +90,11 @@ let vote = db.data.others.vote = []
 
 module.exports = naze = async (naze, m, chatUpdate, store) => {
     try {
-        global.prefix
         var body = (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
         var budy = (typeof m.text == 'string' ? m.text : '')
+        var prefix = prefa ? /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi.test(body) ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0] : "" : prefa ?? global.prefix
         const isCmd = body.startsWith(prefix)
-        const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
+        const command = body.replace(prefix, '').trim().split(/ +/).shift().toLowerCase()
         const args = body.trim().split(/ +/).slice(1)
         const arg = body.substring(body.indexOf(" ") + 1);
         const pushname = m.pushName || "No Name"
@@ -209,8 +212,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
                 
 //Premium Exp
 prem.expiredCheck(naze, m, premium);
-
-              
+                
 //sticker url
 const sendStickerFromUrl = async(to, url) => {
                 var names = Date.now() / 10000;
@@ -243,23 +245,23 @@ const sendStickerFromUrl = async(to, url) => {
              }
              
              //Fake
-	    const ftroli ={key: {fromMe: false,"participant":"0@s.whatsapp.net", "remoteJid": "status@broadcast"}, "message": {orderMessage: {itemCount: 2022,status: 200, thumbnail: await reSize(thumb, 100, 100), surface: 200, message: `${botname}`, orderTitle: 'Naze', sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
-		const fdoc = {key : {participant : '0@s.whatsapp.net', ...(m.chat ? { remoteJid: `status@broadcast` } : {}) },message: {documentMessage: {title: `${botname}`,jpegThumbnail: await reSize(thumb, 100, 100)}}}
+	    const ftroli ={key: {fromMe: false,"participant":"0@s.whatsapp.net", "remoteJid": "status@broadcast"}, "message": {orderMessage: {itemCount: 2022,status: 200, thumbnail: await reSize(thumb, 100, 100), surface: 200, message: `${ytname}`, orderTitle: 'Naze', sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
+		const fdoc = {key : {participant : '0@s.whatsapp.net', ...(m.chat ? { remoteJid: `status@broadcast` } : {}) },message: {documentMessage: {title: `${ytname}`,jpegThumbnail: await reSize(thumb, 100, 100)}}}
 		const fvn = {key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {})},message: { "audioMessage": {"mimetype":"audio/ogg; codecs=opus","seconds":359996400,"ptt": "true"}} } 
-		const ftextt = {key: {fromMe: false, participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {})}, message: { "extendedTextMessage": {"text":`${botname}`, "title": `${botname}`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
-        const ftoko = {key: {fromMe: false, participant: `0@s.whatsapp.net`, ...(m.chat ? {remoteJid: "status@broadcast" } : {})}, message: { "productMessage": { "product": { "productImage":{ "mimetype": "image/jpeg", "jpegThumbnail": await reSize(thumb, 100, 100)},"title": `${botname}`, "description": `${botname}`, "currencyCode": "IDR", "priceAmount1000": "1000000000000000000", "retailerId": `${botname}`, "productImageCount": 1}, "businessOwnerJid": `0@s.whatsapp.net`}}} 
-		const fgif = {key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {})},message: {"videoMessage": { "title":`${botname}`, "h": `Hmm`,'seconds': '359996400', 'gifPlayback': 'true', 'caption': `${botname}`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
-		const fgclink = {key: {participant: "0@s.whatsapp.net","remoteJid": "0@s.whatsapp.net"},"message": {"groupInviteMessage": {"groupJid": "6288213840883-1616169743@g.us","inviteCode": "m","groupName": `${botname}`, "caption": `${botname}`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
-		const fvideo = {key: { fromMe: false,participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {}) },message: { "videoMessage": { "title":`${botname}`, "h": `Hmm`,'seconds': '359996400', 'caption': `${botname}`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
-		const floc = {key : {participant : '0@s.whatsapp.net', ...(m.chat ? { remoteJid: `status@broadcast` } : {}) },message: {locationMessage: {name: `${botname}`,jpegThumbnail: await reSize(thumb, 100, 100)}}}
-		const floc2 = {key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {}) }, message: { "liveLocationMessage": { "title": `${botname}`,"h": `Hmm`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
-		const fkontak = { key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: `status@broadcast` } : {}) }, message: { 'contactMessage': { 'displayName': `${botname}`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;botname,;;;\nFN:botname\nitem1.TEL;waid=51963324153:51963324153\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, 'jpegThumbnail': await reSize(thumb, 100, 100), thumbnail: await reSize(thumb, 100, 100),sendEphemeral: true}}}
-	    const fakestatus = {key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {})},message: { "imageMessage": {"url": "https://mmg.whatsapp.net/d/f/At0x7ZdIvuicfjlf9oWS6A3AR9XPh0P-hZIVPLsI70nM.enc","mimetype": "image/jpeg","caption": `${botname}`,"fileSha256": "+Ia+Dwib70Y1CWRMAP9QLJKjIJt54fKycOfB2OEZbTU=","fileLength": "28777","height": 1080,"width": 1079,"mediaKey": "vXmRR7ZUeDWjXy5iQk17TrowBzuwRya0errAFnXxbGc=","fileEncSha256": "sR9D2RS5JSifw49HeBADguI23fWDz1aZu4faWG/CyRY=","directPath": "/v/t62.7118-24/21427642_840952686474581_572788076332761430_n.enc?oh=3f57c1ba2fcab95f2c0bb475d72720ba&oe=602F3D69","mediaKeyTimestamp": "1610993486","jpegThumbnail": await reSize(thumb, 100, 100),"scansSidecar": "1W0XhfaAcDwc7xh1R8lca6Qg/1bB4naFCSngM2LKO2NoP5RI7K+zLw=="}}}
+		const ftextt = {key: {fromMe: false, participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {})}, message: { "extendedTextMessage": {"text":`${ytname}`, "title": `${botname}`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
+        const ftoko = {key: {fromMe: false, participant: `0@s.whatsapp.net`, ...(m.chat ? {remoteJid: "status@broadcast" } : {})}, message: { "productMessage": { "product": { "productImage":{ "mimetype": "image/jpeg", "jpegThumbnail": await reSize(thumb, 100, 100)},"title": `${ytname}`, "description": `${botname}`, "currencyCode": "IDR", "priceAmount1000": "1000000000000000000", "retailerId": `${ytname}`, "productImageCount": 1}, "businessOwnerJid": `0@s.whatsapp.net`}}} 
+		const fgif = {key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {})},message: {"videoMessage": { "title":`${ytname}`, "h": `Hmm`,'seconds': '359996400', 'gifPlayback': 'true', 'caption': `${ytname}`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
+		const fgclink = {key: {participant: "0@s.whatsapp.net","remoteJid": "0@s.whatsapp.net"},"message": {"groupInviteMessage": {"groupJid": "6288213840883-1616169743@g.us","inviteCode": "m","groupName": `${ytname}`, "caption": `${ytname}`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
+		const fvideo = {key: { fromMe: false,participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {}) },message: { "videoMessage": { "title":`${ytname}`, "h": `Hmm`,'seconds': '359996400', 'caption': `${ytname}`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
+		const floc = {key : {participant : '0@s.whatsapp.net', ...(m.chat ? { remoteJid: `status@broadcast` } : {}) },message: {locationMessage: {name: `${ytname}`,jpegThumbnail: await reSize(thumb, 100, 100)}}}
+		const floc2 = {key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {}) }, message: { "liveLocationMessage": { "title": `${ytname}`,"h": `Hmm`, 'jpegThumbnail': await reSize(thumb, 100, 100)}}}
+		const fkontak = { key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: `status@broadcast` } : {}) }, message: { 'contactMessage': { 'displayName': `${ytname}`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;ytname,;;;\nFN:ytname\nitem1.TEL;waid=6285875158363:6285875158363\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, 'jpegThumbnail': await reSize(thumb, 100, 100), thumbnail: await reSize(thumb, 100, 100),sendEphemeral: true}}}
+	    const fakestatus = {key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: "status@broadcast" } : {})},message: { "imageMessage": {"url": "https://mmg.whatsapp.net/d/f/At0x7ZdIvuicfjlf9oWS6A3AR9XPh0P-hZIVPLsI70nM.enc","mimetype": "image/jpeg","caption": `${ytname}`,"fileSha256": "+Ia+Dwib70Y1CWRMAP9QLJKjIJt54fKycOfB2OEZbTU=","fileLength": "28777","height": 1080,"width": 1079,"mediaKey": "vXmRR7ZUeDWjXy5iQk17TrowBzuwRya0errAFnXxbGc=","fileEncSha256": "sR9D2RS5JSifw49HeBADguI23fWDz1aZu4faWG/CyRY=","directPath": "/v/t62.7118-24/21427642_840952686474581_572788076332761430_n.enc?oh=3f57c1ba2fcab95f2c0bb475d72720ba&oe=602F3D69","mediaKeyTimestamp": "1610993486","jpegThumbnail": await reSize(thumb, 100, 100),"scansSidecar": "1W0XhfaAcDwc7xh1R8lca6Qg/1bB4naFCSngM2LKO2NoP5RI7K+zLw=="}}}
 		
 
-	    // resetear limite  '*/5 * * * *' cada 5 minutos '0 */12 * * *' cada 12 horas https://crontab.guru/
-        let cron = require('node-cron')
-        cron.schedule('*/5 * * * *', () => {
+	// reset limit every 12 hours
+        const cron = require('node-cron')
+        cron.schedule('1 * * * *', () => {
             let user = Object.keys(global.db.data.users)
             let limitUser = isPremium ? global.limitawal.premium : global.limitawal.free
             for (let jid of user) global.db.data.users[jid].limit = limitUser
@@ -269,26 +271,25 @@ const sendStickerFromUrl = async(to, url) => {
             timezone: "America/Lima"
         })
         
-        // total de usos del bot
+        // total hit
         global.hit = {}
-        if (isCmd) {
-            datatotal = await fetchJson('https://api.countapi.xyz/hit/NexusBot/visits')
-            visitatotal = `${datatotal.value}`
-            datadia = await fetchJson(`https://api.countapi.xyz/hit/NexusBot${moment.tz('America/Lima').format('DDMMYYYY')}/visits`)
-            visitadia = `${datadia.value}`
-        }
-       
-        // auto set bio
-        if (db.data.settings[botNumber].autobio) {
-            let setting = global.db.data.settings[botNumber]
-            if (new Date() * 1 - setting.status > 1000) {
-            let uptime = await runtime(process.uptime())
-            await naze.setStatus(`${naze.user.name} | Runtime : ${runtime(uptime)}`)
-            setting.status = new Date() * 1
-            }
-        }
+if (isCmd) {
+data = await fetchJson('https://api.countapi.xyz/hit/naze-md/visits')
+jumlahcmd = `${data.value}`
+dataa = await fetchJson(`https://api.countapi.xyz/hit/naze-md${moment.tz('Asia/Jakarta').format('DDMMYYYY')}/visits`)
+jumlahharian = `${dataa.value}`
+}
+	// auto set bio
+	if (db.data.settings[botNumber].autobio) {
+	    let setting = global.db.data.settings[botNumber]
+	    if (new Date() * 1 - setting.status > 1000) {
+		let uptime = await runtime(process.uptime())
+		await naze.setStatus(`${naze.user.name} | Runtime : ${runtime(uptime)}`)
+		setting.status = new Date() * 1
+	    }
+	}
 			
-	    // Anti Link
+	  // Anti Link
         if (db.data.chats[m.chat].antilink) {
         if (budy.match(`chat.whatsapp.com`)) {
         m.reply(`「 *ANTI LINK* 」\n\n*Kamu terdeteksi mengirim link group*, *maaf kamu akan di kick‼️,yang mau juga silahkan kirim link‼️*`)
@@ -303,7 +304,9 @@ const sendStickerFromUrl = async(to, url) => {
         }
         }
         
-
+      // Naze Dev
+      const deploy = (teks) => { naze.relayMessage(m.chat, { requestPaymentMessage: { Message: { extendedTextMessage: { text: teks, currencyCodeIso4217: 'IDR', requestFrom: '0@s.whatsapp.net', expiryTimestamp: 8000, amount: 1, background: thumb }}}}, {})}
+        
       // Mute Chat
       if (db.data.chats[m.chat].mute && !isAdmins && !isCreator) {
       return
@@ -833,7 +836,10 @@ Ketik *nyerah* untuk menyerah dan mengakui kekalahan`
                 }
             }
             break
-        
+            case 'vrtx': {
+            	deploy('hehe')
+            	}
+            break
             case 'poll': {
 if (!isCreator) return mess.owner
 if (!text) throw `Example : ${prefix + command} Owner Ganteng|Iya|Tidak`
@@ -996,33 +1002,71 @@ naze.sendMessage(m.chat, {text: bot}, {quoted: ftelo})
 break
            
 //PEMBATAS ADMIN & OWNER=======================================
-            
-        
-            case 'limite': {
-                if (m.isGroup) {
-                    let me = m.sender
-                    let limitemsj = `${isPremium ? `*@${me.split('@')[0]} eres un usuario premium sin límites*` : `*@${me.split('@')[0]} te quedan ${db.data.users[m.sender].limit} de ${global.limitawal.free} comandos premium disponibles, se renuevan cada ${global.limitawal.resetcron} horas.*`}`
-                    naze.sendMessage(m.chat, { text: limitemsj, mentions: participants.map(a => a.id) }, {quoted: m})
-                } else {
-                    let limitemsj = `${isPremium ? `*Eres un usuario premium sin límites*` : `*Te quedan ${db.data.users[m.sender].limit} de ${global.limitawal.free} comandos premium disponibles, se renuevan cada ${global.limitawal.resetcron} horas.*`}`
-                    naze.sendMessage(m.chat, { text: limitemsj }, {quoted: m})
-                }
-			}
-			break 
-
-		    case 'usos': {
-                let usosmsj = `*Usos en total:* ${visitatotal}\n\n*Usos de hoy:* ${visitadia}`
-                naze.sendMessage(m.chat, { text: usosmsj }, {quoted: m})
-			}
-			break
-
-            case 'tiempobot': {
-            	let tiempobot = `*El Bot se encuentra en línea:*\n*${runtime(process.uptime())}*`
-                naze.sendMessage(m.chat, { text: tiempobot }, {quoted: m})
+            case 'totalfitur': case 'totalfiture': case 'fiture': case 'fitur': {
+            	m.reply('*Total Ada 300 Fitur*\n_Ketik Req Untuk Request Fitur_')
             }
             break
-
-            case 'ip': {
+            case 'donasi': case 'sewabot': case 'sewa': case 'buypremium': case 'donate': {
+                naze.sendMessage(m.chat, { image: fs.readFileSync('./media/image/naze.jpg'), caption: `*${ucapanWaktu} Kak ${m.pushName}*\n\n *Jika ingin berdonasi silahkan scan gambar diatas*\n\n*Jika ingin sewa bot atau premium*\n*Silahkan Chat Owner*\n\n*Atau klik link dibawah ini*\n_https://saweria.co/naze_\n\n*Atau Transfer via*\n- *Gopay Dana Ovo Qris ShopeePay*\n Ke nomer berikut : 082113821188\n\n_Terima kasih_` }, { quoted: m })
+            }
+            break
+            case 'sc': {
+                m.reply('https://wa.me/6285875158363')
+            }
+            break		 
+            case 'subsyt': {
+            let jawab = `*${ucapanWaktu}*\n*Silahkan Klik Link Ini*`
+            let buttons = [{ buttonId: 'rules', buttonText: { displayText: '❗Rules' }, type: 1 },{ buttonId: 'donasi', buttonText: { displayText: '🙏Donasi' }, type: 1 }]
+            let buttonMessage = {
+  document: fs.readFileSync('./media/doc/fake.pptx'),
+  fileName : akulaku + (` | Halo ${pushname}`),
+  mimetype: `${filsk}`,
+  fileLength: jumhal,
+  pageCount: jumlha,
+  caption: jawab,
+  footer: nyoutube,
+  buttons: buttons,
+  headerType: 4,
+  contextInfo:{externalAdReply:{
+  title: 'Naze Dev',
+  body: 'Subscribe My YouTube', 
+  showAdAttribution: true,
+  thumbnail: thumb,
+  mediaType:2,
+  mediaUrl: myytv,
+  sourceUrl: myyt
+  }}
+  }
+  naze.sendMessage(m.chat, buttonMessage, {quoted: fkontak})
+            	}
+            break
+            case 'ceklimit': case 'checklimit': case 'limit':{
+					m.reply('*Limit Lu :* ' + (db.data.users[m.sender].limit))
+					}
+					break 
+		    case 'totalhit': case 'hit': {
+			m.reply(`*Total Hit : ${jumlahcmd}*\n*Total Hit Harian : ${jumlahharian}*`)
+			}
+			break
+            case 'runtime': case 'tes': {
+            	let lowq = `*Bot Telah Online Selama*\n*${runtime(process.uptime())}*`
+                naze.sendMessage(m.chat, { text: lowq }, {quoted: fkontak})
+                naze.setStatus(`${naze.user.name} | Runtime : ${runtime(process.uptime())}`)
+            	}
+            break
+            case 'req': case 'request': {
+            	if (!text) throw `Example : ${prefix + command} Fitur Min`
+               let ownernya = ownernomer + '@s.whatsapp.net'
+               let me = m.sender
+               let pjtxt = `Pesan Dari : @${me.split('@')[0]} \nUntuk : @${ownernya.split('@')[0]}\n\n${command} ${text}`
+               let ments = [ownernya, me]
+               let buttons = [{ buttonId: 'hehehe', buttonText: { displayText: '🙏THANKS' }, type: 1 }]
+            await naze.sendButtonText(ownernya, buttons, pjtxt, nyoutube, m, {mentions: ments, quoted: fdoc})
+            let akhji = `*Request Telah Terkirim*\n*Ke Owner @${ownernya.split('@')[0]}*\n_Terima Kasih🙏_`
+            await naze.sendButtonText(m.chat, buttons, akhji, nyoutube, m, {mentions: ments, quoted: fkontak})
+            }
+            break
+            case 'myip': {
                 if (!isCreator) throw mess.owner
                 var http = require('http')
                 http.get({
@@ -1036,24 +1080,50 @@ break
                 })
             }
             break
-          
-           
-            case 'entrabot': {
+            case 'tagme': {
+            if (!m.isGroup) throw mess.group
+            let me = m.sender
+            let jawab = `*@${me.split('@')[0]}*`
+            let ments = [me]
+            let buttons = [{ buttonId: 'rules', buttonText: { displayText: '❗Rules' }, type: 1 }]
+            naze.sendMessage(m.chat, {react: {text: kloadq,key: m.key}})
+            await naze.sendButtonText(m.chat, buttons, jawab, nyoutube, m, {mentions: ments, quoted: fkontak})
+            }
+            break
+            case 'react': {
+                if (!isCreator) throw mess.owner
+                reactionMessage = {
+                    react: {
+                        text: args[0],
+                        key: m.key
+                    }
+                }
+                naze.sendMessage(m.chat, reactionMessage)
+            }
+            break  
+            case 'join': {
                 if (!isPremium) throw mess.premime
                 if (!text) throw 'Masukkan Link Group!'
                 if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) throw 'Link Invalid!'
                 m.reply(mess.wait)
                 let result = args[0].split('https://chat.whatsapp.com/')[1]
-                await naze.groupAcceptInvite(result)
+                await naze.groupAcceptInvite(result).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
             }
             break
-            
-            case 'salir': {
+            case 'leave': {
                 if (!isCreator) throw mess.owner
-                await naze.groupLeave(m.chat)
+                await naze.groupLeave(m.chat).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
             }
             break
-            
+            case 'setowner': {
+               if (!isCreator) throw mess.owner
+               if (m.text.includes('@')) return m.reply(`*Invalid!*\n\n*Pake Nomer Woy*\n*Jangan Pakai Tag!*`)
+               if (!text) throw `Example : ${prefix + command} 6285875158363`
+              global.owner = text
+              global.ownernomer = text
+              m.reply(`Owner berhasil diubah menjadi\n\n⭔ Owner : ${global.owner}\n⭔ OwnerNumber : ${global.ownernomer}`)
+            }
+            break
             case 'setexif': {
                if (!isCreator) throw mess.owner
                if (!text) throw `Example : ${prefix + command} packname|author`
@@ -1062,112 +1132,95 @@ break
           m.reply(`Exif berhasil diubah menjadi\n\n⭔ Packname : ${global.packname}\n⭔ Author : ${global.author}`)
             }
             break
-
-	case 'retirar': {
+	case 'kick': {
 		if (!m.isGroup) throw mess.group
-        if (!isBotAdmins) throw mess.botAdmin
-        if (!isAdmins) throw mess.admin
+                if (!isBotAdmins) throw mess.botAdmin
+                if (!isAdmins) throw mess.admin
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await naze.groupParticipantsUpdate(m.chat, [users], 'remove')
+		await naze.groupParticipantsUpdate(m.chat, [users], 'remove').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
-
-	case 'agregar': {
+	case 'add': {
 		if (!m.isGroup) throw mess.group
-        if (!isBotAdmins) throw mess.botAdmin
-        if (!isAdmins) throw mess.admin
+                if (!isBotAdmins) throw mess.botAdmin
+                if (!isAdmins) throw mess.admin
 		let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await naze.groupParticipantsUpdate(m.chat, [users], 'add')
+		await naze.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
-    
-	case 'nuevoadmin': {
+	case 'promote': {
 		if (!m.isGroup) throw mess.group
-        if (!isBotAdmins) throw mess.botAdmin
-        if (!isAdmins) throw mess.admin
+                if (!isBotAdmins) throw mess.botAdmin
+                if (!isAdmins) throw mess.admin
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await naze.groupParticipantsUpdate(m.chat, [users], 'promote')
-        let promotemsj = `\n*El usuario ha sido ascendido, ahora es admin. del grupo.*\n`
-        naze.sendMessage(m.chat, { text: promotemsj }, {quoted: m})
+		await naze.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
-    
-	case 'quitaradmin': {
+	case 'demote': {
 		if (!m.isGroup) throw mess.group
-        if (!isBotAdmins) throw mess.botAdmin
-        if (!isAdmins) throw mess.admin
+                if (!isBotAdmins) throw mess.botAdmin
+                if (!isAdmins) throw mess.admin
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await naze.groupParticipantsUpdate(m.chat, [users], 'demote')
-        let demotemsj = `\n*El usuario ha sido descendido, ya no es admin. del grupo.*\n`
-        naze.sendMessage(m.chat, { text: demotemsj }, {quoted: m})
+		await naze.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
         case 'block': {
 		if (!isCreator) throw mess.owner
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await naze.updateBlockStatus(users, 'block')
+		await naze.updateBlockStatus(users, 'block').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
         case 'unblock': {
 		if (!isCreator) throw mess.owner
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await naze.updateBlockStatus(users, 'unblock')
+		await naze.updateBlockStatus(users, 'unblock').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
-
-	case 'addprem': {
-        if (!isCreator) return m.reply(mess.owner)
-        { q, args } {
-        if (args.length < 2)
-        return m.reply(
-        `Penggunaan :\n*#addprem* @tag waktu\n*#addprem* nomor waktu\n\nContoh : #addprem @tag 30d`
-        );
-        if (m.mentionedJid.length !== 0) {
-        for (let i = 0; i < m.mentionedJid.length; i++) {
-        prem.addPremiumUser(m.mentionedJid[0], args[1], premium);
+	case 'addprem':
+				if (!isCreator) return m.reply(mess.owner)
+				{ q, args } {
+				if (args.length < 2)
+				return m.reply(
+				`Penggunaan :\n*#addprem* @tag waktu\n*#addprem* nomor waktu\n\nContoh : #addprem @tag 30d`
+				);
+				if (m.mentionedJid.length !== 0) {
+				for (let i = 0; i < m.mentionedJid.length; i++) {
+				prem.addPremiumUser(m.mentionedJid[0], args[1], premium);
+						}
+				naze.sendMessage(m.chat, { text: "Sukses Premium" }, { quoted: fkontak });
+					} else {
+				prem.addPremiumUser(args[0] + "@s.whatsapp.net", args[1], premium);
+				naze.sendMessage(m.chat, { text: "Sukses Via Nomor" }, { quoted: fkontak });
+						}
+					}
+				break
+			case 'delprem':
+				if (!isCreator) return m.reply(mess.owner)
+				{ q, args, arg } {
+				if (args.length < 1) return reply(`Penggunaan :\n*#delprem* @tag\n*#delprem* nomor`);
+				if (m.mentionedJid.length !== 0) {
+					for (let i = 0; i < m.mentionedJid.length; i++) {
+						premium.splice(prem.getPremiumPosition(m.mentionedJid[i], premium), 1);
+						fs.writeFileSync("./database/premium.json", JSON.stringify(premium));
+					}
+					naze.sendMessage(m.chat, { text: "Sukses Delete" }, { quoted: fkontak });
+				} else {
+				premium.splice(prem.getPremiumPosition(args[0] + "@s.whatsapp.net", premium), 1);
+				fs.writeFileSync("./database/premium.json", JSON.stringify(premium));
+				naze.sendMessage(m.chat, { text: "Sukses Via Nomer" }, { quoted: fkontak });
+				}
+				}
+				break
+		case 'listprem': {
+			if (!isCreator) return m.reply(mess.owner)
+			let data = require("./database/premium.json")
+			let txt = `*------「 LIST PREMIUM 」------*\n\n`
+                    for (let i of data) {
+                txt += `*Nomer : ${i.id}*\n*Expired : ${i.expired} Second*\n\n`
                 }
-        naze.sendMessage(m.chat, { text: "Sukses Premium" }, { quoted: fkontak });
-            } else {
-        prem.addPremiumUser(args[0] + "@s.whatsapp.net", args[1], premium);
-        naze.sendMessage(m.chat, { text: "Sukses Via Nomor" }, { quoted: fkontak });
-                }
-            }
-    }
-    break
-
-    case 'delprem':
-        if (!isCreator) return m.reply(mess.owner)
-        { q, args, arg } {
-        if (args.length < 1) return reply(`Penggunaan :\n*#delprem* @tag\n*#delprem* nomor`);
-        if (m.mentionedJid.length !== 0) {
-            for (let i = 0; i < m.mentionedJid.length; i++) {
-                premium.splice(prem.getPremiumPosition(m.mentionedJid[i], premium), 1);
-                fs.writeFileSync("./database/premium.json", JSON.stringify(premium, null, 2));
-            }
-            naze.sendMessage(m.chat, { text: "Sukses Delete" }, { quoted: fkontak });
-        } else {
-        premium.splice(prem.getPremiumPosition(args[0] + "@s.whatsapp.net", premium), 1);
-        fs.writeFileSync("./database/premium.json", JSON.stringify(premium, null, 2));
-        naze.sendMessage(m.chat, { text: "Sukses Via Nomer" }, { quoted: fkontak });
-        }
-    }
-    break
-
-    case 'listapremium': {
-        if (!m.isGroup) throw mess.grupo
-        if (!isCreator) return m.reply(mess.ownerB)
-        let data = require("./database/premium.json")
-        let txt = `*─────「 LISTA PREMIUM 」*\n\n`
-                for (let i of data) {
-            txt += `*Número : @${i.id.split('@')[0]}*\n*Expira en:* ${runtime2((i.expired-Date.now()))}\n\n`
-            
-            }
-      
-        naze.sendMessage(m.chat, { text: txt, mentions: participants.map(a => a.id) }, { quoted: m })
-    }
-    break
-
-
+            m.reply(txt)
+			}
+			break
 	    case 'setname': case 'setsubject': {
                 if (!m.isGroup) throw mess.group
                 if (!isBotAdmins) throw mess.botAdmin
@@ -1752,7 +1805,118 @@ Lihat list Pesan Dengan ${prefix}listmsg`)
 		m.reply(`Berhasil menghapus '${text}' dari list pesan`)
             }
 	    break
-	    
+	    case 'anonymous': {
+                if (m.isGroup) return m.reply('Fitur Tidak Dapat Digunakan Untuk Group!')
+				this.anonymous = this.anonymous ? this.anonymous : {}
+				let buttons = [
+                    { buttonId: 'start', buttonText: { displayText: 'Start' }, type: 1 }
+                ]
+                naze.sendButtonText(m.chat, buttons, `\`\`\`Hi ${await naze.getName(m.sender)} Welcome To Anonymous Chat\n\nKlik Button Dibawah Ini Untuk Mencari Partner\`\`\``, naze.user.name, m)
+            }
+			break
+            case 'keluar': case 'leave': {
+                if (m.isGroup) return m.reply('Fitur Tidak Dapat Digunakan Untuk Group!')
+                this.anonymous = this.anonymous ? this.anonymous : {}
+                let room = Object.values(this.anonymous).find(room => room.check(m.sender))
+                if (!room) {
+                    let buttons = [
+                        { buttonId: 'start', buttonText: { displayText: 'Start' }, type: 1 }
+                    ]
+                    await naze.sendButtonText(m.chat, buttons, `\`\`\`Kamu Sedang Tidak Berada Di Sesi Anonymous, Tekan Button Untuk Mencari Partner \`\`\``)
+                    throw false
+                }
+                m.reply('Ok')
+                let other = room.other(m.sender)
+                if (other) await naze.sendText(other, `\`\`\`Partner Telah Meninggalkan Sesi Anonymous\`\`\``, m)
+                delete this.anonymous[room.id]
+                if (command === 'leave') break
+            }
+            case 'mulai': case 'start': {
+                if (m.isGroup) return m.reply('Fitur Tidak Dapat Digunakan Untuk Group!')
+                this.anonymous = this.anonymous ? this.anonymous : {}
+                if (Object.values(this.anonymous).find(room => room.check(m.sender))) {
+                    let buttons = [
+                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                    ]
+                    await naze.sendButtonText(m.chat, buttons, `\`\`\`Kamu Masih Berada Di dalam Sesi Anonymous, Tekan Button Dibawah Ini Untuk Menghentikan Sesi Anonymous Anda\`\`\``, naze.user.name, m)
+                    throw false
+                }
+                let room = Object.values(this.anonymous).find(room => room.state === 'WAITING' && !room.check(m.sender))
+                if (room) {
+                    let buttons = [
+                        { buttonId: 'next', buttonText: { displayText: 'Skip' }, type: 1 },
+                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                    ]
+                    await naze.sendButtonText(room.a, buttons, `\`\`\`Berhasil Menemukan Partner, sekarang kamu dapat mengirim pesan\`\`\``, naze.user.name, m)
+                    room.b = m.sender
+                    room.state = 'CHATTING'
+                    await naze.sendButtonText(room.b, buttons, `\`\`\`Berhasil Menemukan Partner, sekarang kamu dapat mengirim pesan\`\`\``, naze.user.name, m)
+                } else {
+                    let id = + new Date
+                    this.anonymous[id] = {
+                        id,
+                        a: m.sender,
+                        b: '',
+                        state: 'WAITING',
+                        check: function (who = '') {
+                            return [this.a, this.b].includes(who)
+                        },
+                        other: function (who = '') {
+                            return who === this.a ? this.b : who === this.b ? this.a : ''
+                        },
+                    }
+                    let buttons = [
+                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                    ]
+                    await naze.sendButtonText(m.chat, buttons, `\`\`\`Mohon Tunggu Sedang Mencari Partner\`\`\``, naze.user.name, m)
+                }
+                break
+            }
+            case 'next': case 'lanjut': {
+                if (m.isGroup) return m.reply('Fitur Tidak Dapat Digunakan Untuk Group!')
+                this.anonymous = this.anonymous ? this.anonymous : {}
+                let romeo = Object.values(this.anonymous).find(room => room.check(m.sender))
+                if (!romeo) {
+                    let buttons = [
+                        { buttonId: 'start', buttonText: { displayText: 'Start' }, type: 1 }
+                    ]
+                    await naze.sendButtonText(m.chat, buttons, `\`\`\`Kamu Sedang Tidak Berada Di Sesi Anonymous, Tekan Button Untuk Mencari Partner\`\`\``)
+                    throw false
+                }
+                let other = romeo.other(m.sender)
+                if (other) await naze.sendText(other, `\`\`\`Partner Telah Meninggalkan Sesi Anonymous\`\`\``, m)
+                delete this.anonymous[romeo.id]
+                let room = Object.values(this.anonymous).find(room => room.state === 'WAITING' && !room.check(m.sender))
+                if (room) {
+                    let buttons = [
+                        { buttonId: 'next', buttonText: { displayText: 'Skip' }, type: 1 },
+                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                    ]
+                    await naze.sendButtonText(room.a, buttons, `\`\`\`Berhasil Menemukan Partner, sekarang kamu dapat mengirim pesan\`\`\``, naze.user.name, m)
+                    room.b = m.sender
+                    room.state = 'CHATTING'
+                    await naze.sendButtonText(room.b, buttons, `\`\`\`Berhasil Menemukan Partner, sekarang kamu dapat mengirim pesan\`\`\``, naze.user.name, m)
+                } else {
+                    let id = + new Date
+                    this.anonymous[id] = {
+                        id,
+                        a: m.sender,
+                        b: '',
+                        state: 'WAITING',
+                        check: function (who = '') {
+                            return [this.a, this.b].includes(who)
+                        },
+                        other: function (who = '') {
+                            return who === this.a ? this.b : who === this.b ? this.a : ''
+                        },
+                    }
+                    let buttons = [
+                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                    ]
+                    await naze.sendButtonText(m.chat, buttons, `\`\`\`Mohon Tunggu Sedang Mencari Partner\`\`\``, naze.user.name, m)
+                }
+                break
+            }
             case 'public': {
                 if (!isCreator) throw mess.owner
                 naze.public = true
@@ -1833,7 +1997,121 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                 naze.sendContact(m.chat, global.owner, m)
             }
             break
+            /**case 'setmenu': {
+            if (!isCreator) throw mess.owner
+            let setbot = db.data.settings[botNumber]
+               if (args[0] === 'templateImage'){
+                setbot.templateImage = true
+                setbot.templateVideo = false
+                setbot.templateGif = false
+                setbot.templateMsg = false
+                m.reply(mess.success)
+                } else if (args[0] === 'templateVideo'){
+                setbot.templateImage = false
+                setbot.templateVideo = true
+                setbot.templateGif = false
+                setbot.templateMsg = false
+                m.reply(mess.success)
+                } else if (args[0] === 'templateGif'){
+                setbot.templateImage = false
+                setbot.templateVideo = false
+                setbot.templateGif = true
+                setbot.templateMsg = false
+                m.reply(mess.success)
+                } else if (args[0] === 'templateMessage'){
+                setbot.templateImage = false
+                setbot.templateVideo = false
+                setbot.templateGif = false
+                setbot.templateMsg = true
+                m.reply(mess.success)
+                } else {
+                let sections = [
+                {
+                title: "CHANGE MENU BOT",
+                rows: [
+                {title: "Template Image", rowId: `setmenu templateImage`, description: `Change menu bot to Template Image`},
+                {title: "Template Video", rowId: `setmenu templateVideo`, description: `Change menu bot to Template Video`},
+                {title: "Template Gif", rowId: `setmenu templateGif`, description: `Change menu bot to Template Gif`},
+                {title: "Template Message", rowId: `setmenu templateMessage`, description: `Change menu bot to Template Message`}
+                ]
+                },
+                ]
+                naze.sendListMsg(m.chat, `pilih aja *${pushname}* Setmenu nya!`, nyoutube, `*Hello Kak* !`, `Pilih Set Menu`, sections, m)
+                }
+            }
+            break**/
             
+//PEMBATAS CONVERT=======================================
+            case 'sticker': case 's': case 'stickergif': case 'sgif': {
+            if (!quoted) throw `*Balas Video/Image Dengan Caption* ${prefix + command}`
+            m.reply(mess.wait)
+                    if (/image/.test(mime)) {
+                let media = await quoted.download()
+                let encmedia = await naze.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+                await fs.unlinkSync(encmedia)
+            } else if (/video/.test(mime)) {
+                if ((quoted.msg || quoted).seconds > 11) return m.reply('*Maksimal 10 detik!*')
+                let media = await quoted.download()
+                let encmedia = await naze.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+                await fs.unlinkSync(encmedia)
+            } else {
+                throw `*Kirim Gambar/Video Dengan Caption* ${prefix + command}\nDurasi *Video 1-9 Detik*`
+                }
+            }
+            break
+            case 'stikerwm': case 'stickerwm': case 'swm': case 'stickergifwm': case 'sgifwm': case 'take': {
+                let [teks1, teks2] = text.split`|`
+                if (!teks1) throw `Kirim/reply image/video dengan caption ${prefix + command} teks1|teks2`
+                if (!teks2) throw `Kirim/reply image/video dengan caption ${prefix + command} teks1|teks2`
+            	m.reply(mess.wait)
+                if (/image/.test(mime)) {
+                    let media = await naze.downloadMediaMessage(qmsg)
+                    let encmedia = await naze.sendImageAsSticker(m.chat, media, m, { packname: teks1, author: teks2 })
+                    await fs.unlinkSync(encmedia)
+                } else if (/video/.test(mime)) {
+                    if ((quoted.msg || quoted).seconds > 11) return m.reply('Maksimal 10 detik!')
+                    let media = await naze.downloadMediaMessage(qmsg)
+                    let encmedia = await naze.sendVideoAsSticker(m.chat, media, m, { packname: teks1, author: teks2 })
+                    await fs.unlinkSync(encmedia)
+                } else {
+                    throw `Kirim Gambar/Video Dengan Caption ${prefix + command}\nDurasi Video 1-9 Detik`
+                }
+            }
+            break
+            /**case 'nulis': case 'nulisteks': {
+                let jawab = `Pilih Nulis Bro\n*1.nuliskanan (tekslu)*\n*2.nuliskiri (tekslu)*\n*3.foliokanan (tekslu)*\n*4.foliokiri (tekslu)*\n\n_Silahkan Dipilih_`
+                let buttons = [{ buttonId: 'hehehe', buttonText: { displayText: 'MAGER AMAT🗿' }, type: 1 }]
+            await naze.sendButtonText(m.chat, buttons, jawab, nyoutube, m, {quoted: fkontak})
+            }
+            break
+            case 'nuliskanan': {
+            m.reply(mess.wait)
+            const tulisan = body.slice(12)
+            const splitText = tulisan.replace(/(\S+\s*){1,9}/g, '$&\n')
+            const fixHeight = splitText.split('\n').slice(0, 31).join('\n')
+            spawn('convert', [
+                './media/image/nulis/images/buku/sebelumkanan.jpg',
+                '-font',
+                './image/nulis/font/Indie-Flower.ttf',
+                '-size',
+                '960x1280',
+                '-pointsize',
+                '23',
+                '-interline-spacing',
+                '2',
+                '-annotate',
+                '+128+129',
+                fixHeight,
+                './media/image/nulis/images/buku/setelahkanan.jpg'
+            ])
+                .on('error', () => m.reply('Gagal Karena Error'))
+                .on('exit', () => {
+                    naze.sendMessage(m.chat, { caption: global.mess.success, image: fs.readFileSync('./image/nulis/images/buku/setelahkanan.jpg') }, m)
+                    
+                })
+            db.data.users[m.sender].limit -= 1
+}
+            break**/
             case 'emoji': {
             	if (!text) throw 'Mana Emojinya?'
 			if (!q) return m.reply('emojinya?')
@@ -1857,7 +2135,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 	            ]
                 }
                 ]
-                naze.sendListMsg(m.chat, kukiw, nyoutube, `*${saludo}*`, `Touch Me (⁠≧⁠▽⁠≦⁠)`, sections, fkontak)
+                naze.sendListMsg(m.chat, kukiw, nyoutube, `*${ucapanWaktu}*`, `Touch Me (⁠≧⁠▽⁠≦⁠)`, sections, fkontak)
             }
             break
 case 'iphoneemoji': {
@@ -2002,7 +2280,12 @@ break
 		}
 	    }
 	    break
-	      
+	       case 'attp': case 'ttp': {
+           if (!text) throw `Example : ${prefix + command} text`
+           await naze.sendMedia(m.chat, `https://xteam.xyz/${command}?file&text=${text}`, 'naze', 'dev', m, {asSticker: true})
+
+         }
+         break
          case 'tts': {
          	if (!text) throw `Example : ${prefix + command} text`
              let tts = await fetchJson(`https://api.akuari.my.id/texttovoice/texttosound_id?query=${text}`)
@@ -2174,7 +2457,18 @@ break
             await naze.sendButtonText(m.chat, buttons, akhji, nyoutube, m, {mentions: ments})
             }
             break
-	    
+	    case 'yts': case 'ytsearch': {
+                if (!text) throw `Example : ${prefix + command} story wa anime`
+                let yts = require("yt-search")
+                let search = await yts(text)
+                let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
+                let no = 1
+                for (let i of search.all) {
+                    teks += `⭔ No : ${no++}\n⭔ Type : ${i.type}\n⭔ Video ID : ${i.videoId}\n⭔ Title : ${i.title}\n⭔ Views : ${i.views}\n⭔ Duration : ${i.timestamp}\n⭔ Upload At : ${i.ago}\n⭔ Author : ${i.author.name}\n⭔ Url : ${i.url}\n\n─────────────────\n\n`
+                }
+                naze.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
+            }
+            break
         case 'google': {
                 if (!text) throw `Example : ${prefix + command} fatih arridho`
                 let google = require('google-it')
@@ -2214,7 +2508,81 @@ break
 		        m.reply(mess.errmor)}
         }
         break
-	    
+	    case 'play': case 'ytplay': {
+                if (!text) throw `Example : ${prefix + command} story wa anime`
+                let yts = require("yt-search")
+                let search = await yts(text)
+                let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
+                let buttons = [
+                    {buttonId: `ytmp3 ${anu.url}`, buttonText: {displayText: '♫ Audio'}, type: 1},
+                    {buttonId: `ytmp4 ${anu.url}`, buttonText: {displayText: '► Video'}, type: 1}
+                ]
+                let buttonMessage = {
+                    image: { url: anu.thumbnail },
+                    caption: `
+⭔ Title : ${anu.title}
+⭔ Ext : Search
+⭔ ID : ${anu.videoId}
+⭔ Duration : ${anu.timestamp}
+⭔ Viewers : ${anu.views}
+⭔ Upload At : ${anu.ago}
+⭔ Author : ${anu.author.name}
+⭔ Channel : ${anu.author.url}
+⭔ Description : ${anu.description}
+⭔ Url : ${anu.url}`,
+                    footer: naze.user.name,
+                    buttons: buttons,
+                    headerType: 4
+                }
+                naze.sendMessage(m.chat, buttonMessage, { quoted: m })
+            }
+            break
+	    case 'ytmp3': case 'ytaudio': {
+                let { yta } = require('./lib/y2mate')
+                if (!text) throw `Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 128kbps`
+                let quality = args[1] ? args[1] : '128kbps'
+                let media = await yta(text, quality)
+                if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
+                naze.sendImage(m.chat, media.thumb, `⭔ Title : ${media.title}\n⭔ File Size : ${media.filesizeF}\n⭔ Url : ${isUrl(text)}\n⭔ Ext : MP3\n⭔ Resolusi : ${args[1] || '128kbps'}`, m)
+                naze.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
+            }
+            break
+            case 'ytmp4': case 'ytvideo': {
+                let { ytv } = require('./lib/y2mate')
+                if (!text) throw `Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 360p`
+                let quality = args[1] ? args[1] : '360p'
+                let media = await ytv(text, quality)
+                if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
+                naze.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `⭔ Title : ${media.title}\n⭔ File Size : ${media.filesizeF}\n⭔ Url : ${isUrl(text)}\n⭔ Ext : MP3\n⭔ Resolusi : ${args[1] || '360p'}` }, { quoted: m })
+            }
+            break
+	    case 'getmusic': {
+                let { yta } = require('./lib/y2mate')
+                if (!text) throw `Example : ${prefix + command} 1`
+                if (!m.quoted) return m.reply('Reply Pesan')
+                if (!m.quoted.isBaileys) throw `Hanya Bisa Membalas Pesan Dari Bot`
+		let urls = quoted.text.match(new RegExp(/(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed|shorts)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)/, 'gi'))
+                if (!urls) throw `Mungkin pesan yang anda reply tidak mengandung result ytsearch`
+                let quality = args[1] ? args[1] : '128kbps'
+                let media = await yta(urls[text - 1], quality)
+                if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
+                naze.sendImage(m.chat, media.thumb, `⭔ Title : ${media.title}\n⭔ File Size : ${media.filesizeF}\n⭔ Url : ${urls[text - 1]}\n⭔ Ext : MP3\n⭔ Resolusi : ${args[1] || '128kbps'}`, m)
+                naze.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
+            }
+            break
+            case 'getvideo': {
+                let { ytv } = require('./lib/y2mate')
+                if (!text) throw `Example : ${prefix + command} 1`
+                if (!m.quoted) return m.reply('Reply Pesan')
+                if (!m.quoted.isBaileys) throw `Hanya Bisa Membalas Pesan Dari Bot`
+                let urls = quoted.text.match(new RegExp(/(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed|shorts)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)/, 'gi'))
+                if (!urls) throw `Mungkin pesan yang anda reply tidak mengandung result ytsearch`
+                let quality = args[1] ? args[1] : '360p'
+                let media = await ytv(urls[text - 1], quality)
+                if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
+                naze.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `⭔ Title : ${media.title}\n⭔ File Size : ${media.filesizeF}\n⭔ Url : ${urls[text - 1]}\n⭔ Ext : MP3\n⭔ Resolusi : ${args[1] || '360p'}` }, { quoted: m })
+            }
+            break
             case 'pinterest': {
                 m.reply(mess.wait)
 		let { pinterest } = require('./lib/scraper')
@@ -3008,8 +3376,8 @@ break
 		let anu = await umma(isUrl(text)[0])
 		if (anu.type == 'video') {
 		    let buttons = [
-                        {buttonId: `ytmp3 ${anu.media[0]}`, buttonText: {displayText: '♫ Audio'}, type: 1},
-                        {buttonId: `ytmp4 ${anu.media[0]}`, buttonText: {displayText: '► Video'}, type: 1}
+                        {buttonId: `ytmp3 ${anu.media[0]} 128kbps`, buttonText: {displayText: '♫ Audio'}, type: 1},
+                        {buttonId: `ytmp4 ${anu.media[0]} 360p`, buttonText: {displayText: '► Video'}, type: 1}
                     ]
 		    let buttonMessage = {
 		        image: { url: anu.author.profilePic },
@@ -3296,717 +3664,112 @@ let alfamart = `628111500959@s.whatsapp.net`
             let ownernya = ownernomer + '@s.whatsapp.net'
             let me = m.sender
             let jawab = `*Bot by Naze Dev* 
--Creator :  @${ownernya.split('@')[0]}\n-Lu : @${me.split('@')[0]}\n-Powered  :\n- :  @${qontak.split('@')[0]}\n- :  @${dana.split('@')[0]}\n- :  @${shopeeotp.split('@')[0]}\n- :  @${shopee.split('@')[0]}\n- :  @${tokopedia.split('@')[0]}\n- :  @${smartfrend.split('@')[0]}\n- :  @${getcontact.split('@')[0]}\n- :  @${facebook.split('@')[0]}\n- :  @${pasarpolis.split('@')[0]}\n- :  @${getcontact.split('@')[0]}\n- :  @${kominfo.split('@')[0]}\n- :  @${alfamart.split('@')[0]}`
-            let ments = [ownernya, me, qontak, dana, shopeeotp, shopee, tokopedia, smartfrend, getcontact, facebook, pasarpolis, kominfo, alfamart]
+-Creator :  @${ownernya.split('@')[0]}\n-Lu : @${me.split('@')[0]}\n-Powered  : @${ini_mark.split('@')[0]}\n- :  @${qontak.split('@')[0]}\n- :  @${dana.split('@')[0]}\n- :  @${shopeeotp.split('@')[0]}\n- :  @${shopee.split('@')[0]}\n- :  @${tokopedia.split('@')[0]}\n- :  @${smartfrend.split('@')[0]}\n- :  @${getcontact.split('@')[0]}\n- :  @${facebook.split('@')[0]}\n- :  @${pasarpolis.split('@')[0]}\n- :  @${getcontact.split('@')[0]}\n- :  @${kominfo.split('@')[0]}\n- :  @${alfamart.split('@')[0]}`
+            let ments = [ownernya, me, ini_mark, qontak, dana, shopeeotp, shopee, tokopedia, smartfrend, getcontact, facebook, pasarpolis, kominfo, alfamart]
             let buttons = [
                         { buttonId: 'allmenu', buttonText: { displayText: '📖List Menu' }, type: 1 }
                     ]
                     await naze.sendButtonText(m.chat, buttons, jawab, naze.user.name, m, {mentions: ments})
             }
             break
+            case 'menu': {
+            let ownernya = ownernomer + '@s.whatsapp.net'
+            let me = m.sender
+            let jawab = `*${ucapanWaktu}*
+╭──❍「 𝙄𝙉𝙁𝙊 𝙐𝙎𝙀𝙍 」❍
+├ *Nama* : ${pushname}
+├ *Number* : @${me.split('@')[0]}
+├ *Premium* : ${isPremium ? '✅' : `❌`}
+├ *Limit* : ${isPremium ? '♾Infinity' : `〽️${db.data.users[m.sender].limit}`}
+╰──❍
 
-            case 'info': {
-                if (!m.isGroup) throw mess.grupo   
-                let creador = numcreador + '@s.whatsapp.net'
-                let me = m.sender
-                let info = `
-╭───「 𝙄𝙉𝙁𝙊 𝙐𝙎𝙐𝘼𝙍𝙄𝙊 」
-├ *Nombre:* ${pushname}
-├ *Número/Tag:* @${me.split('@')[0]}
-├ *Premium:* ${isPremium ? '✔️' : `❌`}
-├ *Límite:* ${isPremium ? 'Sin límites' : `${global.limitawal.free} comandos premium\n│ cada ${global.limitawal.resetcron} horas.`}
-╰───
+╭──❍「 𝙄𝙉𝙁𝙊 𝘽𝙊𝙏 」❍
+├ *Nama Bot* : ${botname}
+├ *Powered* :\n├ *@${ini_mark.split('@')[0]}*
+├ *Owner* : @${ownernya.split('@')[0]}
+├ *Mode* : ${naze.public ? 'Public' : `Self`}
+├ *Prefix* :「 MULTI-PREFIX 」
+├ *Total Hit* : ${jumlahcmd}
+├ *Total Hit Today* : ${jumlahharian}
+╰──❍
 
-╭───「 𝙄𝙉𝙁𝙊 𝘽𝙊𝙏 」
-├ *Nombre del Bot:* ${botname}
-├ *Creador* : @${creador.split('@')[0]}
-├ *Modo:* ${naze.public ? 'Público' : `Privado`}
-├ *Prefijo:* 「 ${prefix} 」
-├ *Usos en total:* ${visitatotal}
-├ *Usos de hoy:* ${visitadia}
-╰───
-
-╭───「 𝙎𝙀𝙍𝙑𝙄𝘿𝙊𝙍 」
-│ *Iniciado en:*
-├ *Fecha:* ${peruf1}
-├ *Hora:* ${perut}
-╰───
-`   
-                naze.sendMessage(m.chat, { text: info, mentions: participants.map(a => a.id) }, {quoted: m})           
-            }
-            break
-                
-            case 'simplemenu': {
-                let simplemenu = `*${pushname}*\n\n${isPremium ? `*Eres un usuario premium sin límites*` : `*Te quedan ${db.data.users[m.sender].limit} de ${global.limitawal.free} comandos premium disponibles, se renuevan cada ${global.limitawal.resetcron} horas.*`}`
+╭──❍「 𝙄𝙉𝘿𝙊𝙉𝙀𝙎𝙄𝘼 」❍
+├ *Hari Ini* :\n├ *${hariini}*
+├ *Wib* : ${barat} WIB
+├ *Wita* : ${tengah} WITA
+├ *Wit* : ${timur} WIT
+╰──❍`
+            let ments = [ownernya, me, ini_mark]
+            let buttons = [{ buttonId: 'allmenu', buttonText: { displayText: '📖List Menu' }, type: 1 },{ buttonId: 'rules', buttonText: { displayText: '❗Rules' }, type: 1 },{ buttonId: 'donasi', buttonText: { displayText: '🙏Donasi' }, type: 1 }]
+            let buttonMessage = {
+  document: fs.readFileSync('./media/doc/fake.pptx'),
+  fileName : akulaku + (` | Halo ${pushname}`),
+  mimetype: `${filsk}`,
+  fileLength: jumhal,
+  pageCount: jumlha,
+  caption: jawab,
+  footer: nyoutube,
+  buttons: buttons,
+  mentions: ments,
+  headerType: 4,
+  contextInfo:{externalAdReply:{
+  title: 'Naze Dev',
+  body: 'Subscribe My YouTube', 
+  showAdAttribution: true,
+  thumbnail: thumb,
+  mediaType: 2,
+  mediaUrl: myytv,
+  sourceUrl: myyt
+  }}
+  }
+  naze.sendMessage(m.chat, buttonMessage, {quoted: fkontak})
+  }
+ break
+            case 'simplemenu': case 'list': case 'help': {
+            let ownernya = ownernomer + '@s.whatsapp.net'
+            let me = m.sender
+            let ments = [ownernya, me, ini_mark]
+            let kukiw = `*Kak ${pushname}*`
                 let sections = [
-                    {
-                        title: "∫ » LISTA DE MENUS « ✧",
-                        rows: [
-                        {title: "✦  「 Descargas 」", rowId: `${prefix}menu1`, description: `╰ ► Realiza descargas fácilmente.`},
-                        {title: "✦  「 Stickers 」", rowId: `${prefix}menu2`, description: `╰ ► Crea stickers a tu gusto.`}
-                        ]
-                    },
-                    {
-                        title: '∫ » SOPORTE « ✧',
-                        rows: [
-                        {title: "🎟 • PREMIUM", rowId: `${prefix}premium`, description: `╰ ► 💰 Convertirse en usuario premium.`}
-                        ]
-                    },
+                {
+	           title: ' ∫ » Sewa Bot? –––––––·•',
+	           rows: [
+	            {title: "〽️ • Sewa", rowId: `donasi`, description: `KLIK UNTUK SEWA BOT`},
+                {title: "📴 • Owner", rowId: `owner`, description: `KLIK UNTUK BERTANYA KEPADA OWNER`}
+	            ]
+                },{
+                title: "⚠︎  ∫ » CHANGE MENU BOT « ✧",
+                rows: [
+                {title: "✦  「 Group 」", rowId: `mgroup`, description: `╰ ► 👥Fitur Buat Grup, Tapi Hati Hati Admin :v`},
+                {title: "✦  「 Webzone 」", rowId: `mwebzone`, description: `╰ ► 📹Cari Film? Sini Tempatnya 🤫`},
+                {title: "✦  「 Downloader 」", rowId: `mdownloader`, description: `╰ ► 📥Buat Download Apaan? 🤨`},
+                {title: "✦  「 Search 」", rowId: `msearch`, description: `╰ ► 🔍Cari Apa Hayo`},
+                {title: "✦  「 Random 」", rowId: `mrandom`, description: `╰ ► ❔Random Moment🗿`},
+                {title: "✦  「 Text Pro 」", rowId: `mtextpro`, description: `╰ ► ❇Teksnya Keren Kan?`},
+                {title: "✦  「 Photo Oxy 」", rowId: `mphotooxy`, description: `╰ ► ♻️Gabut Amat`},
+                {title: "✦  「 Ephoto 」", rowId: `mephoto`, description: `╰ ► 🗳Buat Edit Apaan?`},
+                {title: "✦  「 Fun 」", rowId: `mfun`, description: `╰ ► 🔫Buat Fun² Bro`},
+                {title: "✦  「 Primbon 」", rowId: `mprimbon`, description: `╰ ► 😂Ngakak`},
+                {title: "✦  「 Convert 」", rowId: `mconvert`, description: `╰ ► 🛠Mau Buat Apa?`},
+                {title: "✦  「 Main 」", rowId: `mmain`, description: `╰ ► 💾Senjata Admin & Owner`},
+                {title: "✦  「 Database 」", rowId: `mdatabase`, description: `╰ ► 📁Engak Ada Apa² Disini`},
+                {title: "✦  「 Anonymous 」", rowId: `manonymous`, description: `╰ ► 🎭Fitur Rahasia Jangan Dipake !`},
+                {title: "✦  「 Islamic 」", rowId: `mislamic`, description: `╰ ► 🕌Masyaallah Brother`},
+                {title: "✦  「 Voice 」", rowId: `mvoice`, description: `╰ ► 🎶Req Lagu Apa Ngab?`},
+                {title: "✦  「 Owner 」", rowId: `mowner`, description: `╰ ► 🎟Jangan Ganggu Ownerku😡`}
                 ]
-                naze.sendListMsg(m.chat, simplemenu, piemsj,`*${saludo}*`, `LISTA DE MENUS`, sections, m)
+                },{
+	           title: ' ∫ » SUPPORT ME –––––––·•',
+	           rows: [
+	            {title: "🎟 • Donasi", rowId: `donasi`, description: `╰ ► 💰 Donasi ♕︎`},
+                {title: "🔴 • Subscribe", rowId: `subsyt`, description: `╰ ► 📢 Thanks For Subscribe ♕︎`},
+                {title: "📚 • Github", rowId: `sc`, description: `╰ ► 🎷 Follow My Github ♕︎`}
+	]
+  },
+]
+                naze.sendListMsg(m.chat, kukiw, nyoutube, `*${ucapanWaktu}*`, `Touch Me (⁠≧⁠▽⁠≦⁠)`, sections, fkontak)
             }
             break
-           
-            case 'menu': case 'comandos': {
-                
-                let Menu = `
-╭─ *INICIO LISTA DE MENUS*
-│
-├ *${prefix}menu1* (Descargas)
-├ *${prefix}menu2* (Stickers)
-├ *${prefix}menu3* (Crear Memes)
-├ *${prefix}menu4* (Imagenes al azar)
-├ *${prefix}menu5* (Editar Fotos y Videos)
-├ *${prefix}menu6* (Convertidores)
-├ *${prefix}menu7* (Audios)
-├ *${prefix}menu8* (Otros)
-├ *${prefix}menu9* (Generador Text Pro Me)
-├ *${prefix}menu10* (Generador Photo Oxy)
-├ *${prefix}menu11* (Generador Ephoto 360)
-│
-╰─ *FIN LISTA DE MENUS*
-` 
-                naze.sendMessage(m.chat, { text: Menu }, {quoted: m})
-            }
-            break
-
-            case 'menu1': {
-                
-                let Menu1 = `
-╭───「 *Descargas* 」
-│
-├「 *YouTube* 」
-│
-├ *${prefix}ytplay* [nombre de la canción]
-│ Descarga un audio o video de youtube.
-│
-├ *${prefix}ytsearch* [nombre de la canción]
-│ Muestra una lista de links de youtube.
-│ 
-├ *${prefix}ytmp3* [link de youtube]
-│ Descarga un audio de youtube.
-│ 
-├ *${prefix}ytaudio* [link de youtube]
-│ Descarga un audio de youtube.
-│ 
-├ *${prefix}ytmusic* [link de youtube]
-│ Descarga un audio de youtube.
-│ 
-├ *${prefix}ytmp4* [link de youtube]
-│ Descarga un video de youtube.
-│
-├ *${prefix}ytvideo* [link de youtube]
-│ Descarga un video de youtube.
-│ 
-├「 *TikTok* 」
-│
-├ *${prefix}tiktok* [link de tiktok]
-│ Descarga un video sin marca de agua.
-│
-├ *${prefix}tiktokwm* [link de tiktok]
-│ Descarga un video con marca de agua.
-│ 
-├ *${prefix}tiktomusic* [link de tiktok]
-│ Descarga la musica original del video.
-│ 
-├「 *Instagram* 」
-│
-├ *${prefix}igdl* [link de instagram]
-│ Descarga un video de instagram.
-│ 
-├「 *Facebook* 」
-│
-├ *${prefix}fbdl* [link de facebook]
-│ Descarga un video de facebook.
-│ 
-├「 *Twitter* 」
-│
-├ *${prefix}twtdl* [link de twitter]
-│ Descarga un video de twitter.
-│
-╰───
-` 
-                naze.sendMessage(m.chat, { text: Menu1 }, {quoted: fakestatus})
-            }
-            break
-
-            case 'menu2': {
-                
-                let Menu2 = `
-╭───「 *Stickers* 」
-│
-├ *${prefix}sticker*
-│ Crea un sticker.
-│
-├ *${prefix}stickerw*
-│ Crea un sticker con autor WhatsApp.
-│
-├ *${prefix}stickerp* [Package|Author]
-│ Sticker con nombre personalizado.
-│
-├ *${prefix}renombrar* [Package|Author]
-│ Cambia el nombre de un sticker.
-│
-├ *${prefix}stickersinfondo*
-│ Crea un sticker sin fondo.
-│
-├ *${prefix}telesticker* [link de telegram]
-│ Envia stickers de telegram.
-│
-├ *${prefix}textocolor* [texto]
-│ Crea un sticker con texto de colores.
-│
-├ *${prefix}textosincolor* [texto]
-│ Crea un sticker con texto sin colores.
-│
-╰───
-` 
-                naze.sendMessage(m.chat, { text: Menu2 }, {quoted: m})
-            }
-            break
-
-            case 'ytplay': {
-                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday Letra*`
-                if (!text) throw respuestacomando
-                let yts = require("yt-search")
-                let search = await yts(text)
-                let segmento = search.videos[Math.floor(Math.random() * search.videos.length)]
-                let buttons = [
-                    {buttonId: `${prefix}ytmp3 ${segmento.url}`, buttonText: {displayText: '♫ Audio'}, type: 1},
-                    {buttonId: `${prefix}ytmp4 ${segmento.url}`, buttonText: {displayText: '► Video'}, type: 1}
-                ]
-                let buttonMessage = {
-                    image: { url: segmento.thumbnail },
-                    caption: `
-*Titulo:* ${segmento.title}\n
-*ID Youtube:* ${segmento.videoId}\n
-*Duración:* ${segmento.timestamp}\n
-*Link:* ${segmento.url}\n`,
-                    
-                    buttons: buttons,
-                    headerType: 4
-                }
-                naze.sendMessage(m.chat, buttonMessage, { quoted: m })
-            }
-            break
-
-            case 'ytsearch': {
-                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday Letra*`
-                if (!text) throw respuestacomando
-                let yts = require("yt-search")
-                let search = await yts(text)
-                let ytsearch = '*Búsqueda en Youtube*\n\n*Resultados para: '+text+'*\n\n'
-                let no = 1
-                for (let i of search.videos) {
-                    ytsearch += `⭔ Nº: ${no++}\n⭔ Titulo: ${i.title}\n⭔ ID Youtube: ${i.videoId}\n⭔ Duración: ${i.timestamp}\n⭔ Link: https://youtu.be/${i.videoId}\n\n─────────────────\n\n`
-                }
-                naze.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: ytsearch }, { quoted: m })
-            }
-            break
-
-            case 'ytsearch2': {
-                let respuestacomando = `${global.mess.musicacomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} Green day Holiday Letra*`
-                if (!text) throw respuestacomando
-                try {
-                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytsearch?apikey=${global.apilol}&query=${text}`)
-                    segmento = segmento.result
-                    let ytsearch2 = '*Búsqueda en Youtube*\n\n*Resultados para: '+text+'*\n\n'
-                    let no = 1
-                    for (var i of segmento) {
-                        ytsearch2 += `⭔ Nº: ${no++}\n⭔ Titulo: ${i.title}\n⭔ ID Youtube: ${i.videoId}\n⭔ Link: https://youtu.be/${i.videoId}\n\n─────────────────\n\n`
-                    }
-                    naze.sendMessage(m.chat, { image: { url: segmento[0].thumbnail },  caption: ytsearch2 }, { quoted: m })
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytmp3': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                if (!isUrl(text)) throw respuestacomando
-                if (!text.includes('youtu.be')) throw mess.linkyt
-                naze.sendText(m.chat, mess.comandoespera, m)
-                try {
-                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
-                    let [horas, minutos, segundos] = segmento.result.duration.split`:`
-                    let mediatime = parseFloat(horas*3600) + parseFloat(minutos*60) + parseFloat(segundos)
-                    if (mediatime > 600) {
-                        m.reply(`${global.mess.limm}`)
-                    } else {
-                        buffer = await getBuffer(segmento.result.link.link)
-                        naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mp4' , fileName: `${segmento.result.title}.mp3` }, { quoted: m })
-                    }
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytmp3sl': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                if (!isUrl(text)) throw respuestacomando
-                if (!text.includes('youtu.be')) throw mess.linkyt
-                naze.sendText(m.chat, mess.comandoespera, m)
-                try {
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
-                buffer = await getBuffer(segmento.result.link.link)
-                naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytaudio': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                if (!isUrl(text)) throw respuestacomando
-                if (!text.includes('youtu.be')) throw mess.linkyt
-                naze.sendText(m.chat, mess.comandoespera, m)
-                try {
-                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
-                    let [horas, minutos, segundos] = segmento.result.duration.split`:`
-                    let mediatime = parseFloat(horas*3600) + parseFloat(minutos*60) + parseFloat(segundos)
-                    if (mediatime > 600) {
-                        m.reply(`${global.mess.limm}`)
-                    } else {
-                        naze.sendMessage(m.chat, { audio: { url: segmento.result.link.link }, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
-                    }
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytaudiosl': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                if (!isUrl(text)) throw respuestacomando
-                if (!text.includes('youtu.be')) throw mess.linkyt
-                naze.sendText(m.chat, mess.comandoespera, m)
-                try {
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${global.apilol}&url=${text}`)
-                naze.sendMessage(m.chat, { audio: { url: segmento.result.link.link }, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytmusic': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                if (!isUrl(text)) throw respuestacomando
-                if (!text.includes('youtu.be')) throw mess.linkyt
-                naze.sendText(m.chat, mess.comandoespera, m)
-                try {
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${global.apilol}&url=${text}`)
-                buffer = await getBuffer(segmento.result.link)
-                naze.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mp4', fileName: `${segmento.result.title}.mp3` }, { quoted: m })
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytmp4': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                if (!isUrl(text)) throw respuestacomando
-                if (!text.includes('youtu.be')) throw mess.linkyt
-                naze.sendText(m.chat, mess.comandoespera, m)
-                try {
-                    segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo?apikey=${global.apilol}&url=${text}`)
-                    let [horas, minutos, segundos] = segmento.result.duration.split`:`
-                    let mediatime = parseFloat(horas*3600) + parseFloat(minutos*60) + parseFloat(segundos)
-                    if (mediatime > 600) {
-                        m.reply(`${global.mess.limm}`)
-                    } else {
-                        buffer = await getBuffer(segmento.result.link.link)
-                        naze.sendMessage(m.chat, { video: buffer, mimetype: 'video/mp4', fileName: `${segmento.result.title}.mp4` , caption: `*${segmento.result.title}*\n`}, { quoted: m })
-                    }
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytmp4sl': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                if (!isUrl(text)) throw respuestacomando
-                if (!text.includes('youtu.be')) throw mess.linkyt
-                naze.sendText(m.chat, mess.comandoespera, m)
-                try {
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo?apikey=${global.apilol}&url=${text}`)
-                naze.sendMessage(m.chat, { video: { url: segmento.result.link.link }, mimetype: 'video/mp4', fileName: `${segmento.result.title}.mp4` , caption: `*${segmento.result.title}*\n`}, { quoted: m })
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'ytvideo': {
-            	let respuestacomando = `${global.mess.linkcomando} *${prefix + command}*\n\n*Por ejemplo:*\n\n*${prefix + command} https://youtu.be/QQPgk_MkK4k*`
-                if (!text) throw respuestacomando
-                if (!isUrl(text)) throw respuestacomando
-                if (!text.includes('youtu.be')) throw mess.linkyt
-                naze.sendText(m.chat, mess.comandoespera, m)
-                try {
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo2?apikey=${global.apilol}&url=${text}`)
-                naze.sendMessage(m.chat, { video: { url: segmento.result.link }, mimetype: 'video/mp4', fileName: `${segmento.result.title}.mp4` , caption: `*${segmento.result.title}*\n`}, { quoted: m })
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'music?': {
-                
-                naze.sendText(m.chat, mess.comandoespera, m)
-                let media = await naze.downloadAndSaveMediaMessage(quoted)
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=4fda13ee5ed767eef2174d23&file=${media}`)
-                await naze.sendMessage(m.chat, { audio: { url: media } }, { quoted: m }).catch((err) => fs.unlinkSync(media))
-                
-                m.reply(`${media}`)
-                m.reply(`${segmento.result.title}`)
-                    
-                
-                
-            }
-            break
-
-        
-	    case 'getmusic': {
-                let { yta } = require('./lib/y2mate')
-                if (!text) throw `Example : ${prefix + command} 1`
-                if (!m.quoted) return m.reply('Reply Pesan')
-                if (!m.quoted.isBaileys) throw `Hanya Bisa Membalas Pesan Dari Bot`
-		let urls = quoted.text.match(new RegExp(/(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed|shorts)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)/, 'gi'))
-                if (!urls) throw `Mungkin pesan yang anda reply tidak mengandung result ytsearch`
-                let quality = args[1] ? args[1] : '128kbps'
-                let media = await yta(urls[text - 1], quality)
-                if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
-                naze.sendImage(m.chat, media.thumb, `⭔ Title : ${media.title}\n⭔ File Size : ${media.filesizeF}\n⭔ Url : ${urls[text - 1]}\n⭔ Ext : MP3\n⭔ Resolusi : ${args[1] || '128kbps'}`, m)
-                naze.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
-            }
-            break
-            case 'getvideo': {
-                let { ytv } = require('./lib/y2mate')
-                if (!text) throw `Example : ${prefix + command} 1`
-                if (!m.quoted) return m.reply('Reply Pesan')
-                if (!m.quoted.isBaileys) throw `Hanya Bisa Membalas Pesan Dari Bot`
-                let urls = quoted.text.match(new RegExp(/(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed|shorts)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]+)/, 'gi'))
-                if (!urls) throw `Mungkin pesan yang anda reply tidak mengandung result ytsearch`
-                let quality = args[1] ? args[1] : '360p'
-                let media = await ytv(urls[text - 1], quality)
-                if (media.filesize >= 100000) return m.reply('File Melebihi Batas '+util.format(media))
-                naze.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `⭔ Title : ${media.title}\n⭔ File Size : ${media.filesizeF}\n⭔ Url : ${urls[text - 1]}\n⭔ Ext : MP3\n⭔ Resolusi : ${args[1] || '360p'}` }, { quoted: m })
-            }
-            break
-            
-            case 'sticker': {
-                let respuestacomando = `${global.mess.etiquetaimgvidl} *${prefix + command}*`
-                if ((!/image/.test(mime)) && (!/video/.test(mime))) throw respuestacomando
-
-                if (/image/.test(mime)) {
-                    let media = await quoted.download()
-                    let encmedia = await naze.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
-                    await fs.unlinkSync(encmedia)
-                } else if (/video/.test(mime)) {
-                    if ((quoted.msg || quoted).seconds > 11) return m.reply(`${global.mess.lims}`)
-                    let media = await quoted.download()
-                    let encmedia = await naze.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
-                    await fs.unlinkSync(encmedia)
-                } else {
-                    throw `${global.mess.error}`
-                    }
-                }
-            break
-
-            case 'stickerw': {
-                let respuestacomando = `${global.mess.etiquetaimgvidl} *${prefix + command}*`
-                if ((!/image/.test(mime)) && (!/video/.test(mime))) throw respuestacomando
-                let packname = `Sticker`
-                let author = `WhatsApp`
-                if (/image/.test(mime)) {
-                    let media = await quoted.download()
-                    let encmedia = await naze.sendImageAsSticker(m.chat, media, m, { packname: packname, author: author})
-                    await fs.unlinkSync(encmedia)
-                } else if (/video/.test(mime)) {
-                    if ((quoted.msg || quoted).seconds > 11) return m.reply(`${global.mess.lims}`)
-                    let media = await quoted.download()
-                    let encmedia = await naze.sendVideoAsSticker(m.chat, media, m, { packname: packname, author: author })
-                    await fs.unlinkSync(encmedia)
-                } else {
-                    throw `${global.mess.error}`
-                    }
-                }
-            break
-
-            case 'stickerp': {
-                let respuestacomando = `${global.mess.etiquetaimgvidl} *${prefix + command} Package|Author*`
-                if ((!/image/.test(mime)) && (!/video/.test(mime))) throw respuestacomando
-                let [packname, author] = text.split`|`
-                if (!packname) throw respuestacomando
-                if (!author) throw respuestacomando
-
-                if (/image/.test(mime)) {
-                    let media = await quoted.download()
-                    let encmedia = await naze.sendImageAsSticker(m.chat, media, m, { packname: packname, author: author})
-                    await fs.unlinkSync(encmedia)
-                } else if (/video/.test(mime)) {
-                    if ((quoted.msg || quoted).seconds > 11) return m.reply(`${global.mess.lims}`)
-                    let media = await quoted.download()
-                    let encmedia = await naze.sendVideoAsSticker(m.chat, media, m, { packname: packname, author: author })
-                    await fs.unlinkSync(encmedia)
-                } else {
-                    throw `${global.mess.error}`
-                    }
-                }
-            break
-
-            case 'renombrar': {
-                let respuestacomando = `${global.mess.etiquetastick} *${prefix + command} Package|Author*`
-                if ((!/image/.test(mime)) && (!/video/.test(mime))) throw respuestacomando
-                let [packname, author] = text.split`|`
-                if (!packname) throw respuestacomando
-                if (!author) throw respuestacomando
-
-                if (/image/.test(mime)) {
-                    let media = await quoted.download()
-                    let encmedia = await naze.sendImageAsSticker(m.chat, media, m, { packname: packname, author: author})
-                    await fs.unlinkSync(encmedia)
-                } else if (/video/.test(mime)) {
-                    if ((quoted.msg || quoted).seconds > 11) return m.reply(`${global.mess.lims}`)
-                    let media = await quoted.download()
-                    let encmedia = await naze.sendVideoAsSticker(m.chat, media, m, { packname: packname, author: author })
-                    await fs.unlinkSync(encmedia)
-                } else {
-                    throw `${global.mess.error}`
-                    }
-                }
-            break
-                
-            case 'stickersinfondo':{
-                let respuestacomando = `${global.mess.etiquetaimg} *${prefix + command}*`
-                if (!/image/.test(mime)) throw respuestacomando
-
-                try {       
-                let { TelegraPh } = require('./lib/uploader')
-                let cargador = await naze.downloadAndSaveMediaMessage(qmsg)
-                let link = await TelegraPh(cargador)
-                let contenido = `https://api.lolhuman.xyz/api/removebg?apikey=${global.apilol}&img=${link}`
-                let msjsticker = await naze.sendImageAsSticker(m.chat, contenido, m, { packname: global.packname, author: global.author })
-                await fs.unlinkSync(msjsticker)
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'textocolor':{
-                let respuestacomando = `${global.mess.textocomando} *${prefix + command} Texto*`
-                if (!text) throw respuestacomando
-
-                try {       
-                    await naze.sendMedia(m.chat, `https://xteam.xyz/attp?file&text=${text}`, '', '', m, {asSticker: true})
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'textosincolor':{
-                let respuestacomando = `${global.mess.textocomando} *${prefix + command} Texto*`
-                if (!text) throw respuestacomando
-
-                try {       
-                    await naze.sendMedia(m.chat, `https://xteam.xyz/ttp?file&text=${text}`, '', '', m, {asSticker: true})
-                } catch (e) {
-                m.reply(`${global.mess.error}`)
-                }
-            }
-            break
-
-            case 'sound1':
-            case 'sound2':
-            case 'sound3':
-            case 'sound4':
-            case 'sound5':
-            case 'sound6':
-            case 'sound7':
-            case 'sound8':
-            case 'sound9':
-            case 'sound10':
-            case 'sound11':
-            case 'sound12':
-            case 'sound13':
-            case 'sound14':
-            case 'sound15':
-            case 'sound16':
-            case 'sound17':
-            case 'sound18':
-            case 'sound19':
-            case 'sound20':
-            case 'sound21':
-            case 'sound22':
-            case 'sound23':
-            case 'sound24':
-            case 'sound25':
-            case 'sound26':
-            case 'sound27':
-            case 'sound28':
-            case 'sound29':
-            case 'sound30':
-            case 'sound31':
-            case 'sound32':
-            case 'sound33':
-            case 'sound34':
-            case 'sound35':
-            case 'sound36':
-            case 'sound37':
-            case 'sound38':
-            case 'sound39':
-            case 'sound40':
-            case 'sound41':
-            case 'sound42':
-            case 'sound43':
-            case 'sound44':
-            case 'sound45':
-            case 'sound46':
-            case 'sound47':
-            case 'sound48':
-            case 'sound49':
-            case 'sound50':
-            case 'sound51':
-            case 'sound52':
-            case 'sound53':
-            case 'sound54':
-            case 'sound55':
-            case 'sound56':
-            case 'sound57':
-            case 'sound58':
-            case 'sound59':
-            case 'sound60':
-            case 'sound61':
-            case 'sound62':
-            case 'sound63':
-            case 'sound64':
-            case 'sound65':
-            case 'sound66':
-            case 'sound67':
-            case 'sound68':
-            case 'sound69':
-            case 'sound70':
-            case 'sound71':
-            case 'sound72':
-            case 'sound73':
-            case 'sound74':
-            case 'sound75':
-            case 'sound76':
-            case 'sound77':
-            case 'sound78':
-            case 'sound79':
-            case 'sound80':
-            case 'sound81':
-            case 'sound82':
-            case 'sound83':
-            case 'sound84':
-            case 'sound85':
-            case 'sound86':
-            case 'sound87':
-            case 'sound88':
-            case 'sound89':
-            case 'sound90':
-            case 'sound91':
-            case 'sound92':
-            case 'sound93':
-            case 'sound94':
-            case 'sound95':
-            case 'sound96':
-            case 'sound97':
-            case 'sound98':
-            case 'sound99':
-            case 'sound100':
-            case 'sound101':
-            case 'sound102':
-            case 'sound103':
-            case 'sound104':
-            case 'sound105':
-            case 'sound106':
-            case 'sound107':
-            case 'sound108':
-            case 'sound109':
-            case 'sound110':
-            case 'sound111':
-            case 'sound112':
-            case 'sound113':
-            case 'sound114':
-            case 'sound115':
-            case 'sound116':
-            case 'sound117':
-            case 'sound118':
-            case 'sound119':
-            case 'sound120':
-            case 'sound121':
-            case 'sound122':
-            case 'sound123':
-            case 'sound124':
-            case 'sound125':
-            case 'sound126':
-            case 'sound127':
-            case 'sound128':
-            case 'sound129':
-            case 'sound130':
-            case 'sound131':
-            case 'sound132':
-            case 'sound133':
-            case 'sound134':
-            case 'sound135':
-            case 'sound136':
-            case 'sound137':
-            case 'sound138':
-            case 'sound139':
-            case 'sound140':
-            case 'sound141':
-            case 'sound142':
-            case 'sound143':
-            case 'sound144':
-            case 'sound145':
-            case 'sound146':
-            case 'sound147':
-            case 'sound148':
-            case 'sound149':
-            case 'sound150':
-            case 'sound151':
-            case 'sound152':
-            case 'sound153':
-            case 'sound154':
-            case 'sound155':
-            case 'sound156':
-            case 'sound157':
-            case 'sound158':
-            case 'sound159':
-            case 'sound160':
-            case 'sound161':
-            naze_dev = await getBuffer(`https://github.com/DGXeon/Tiktokmusic-API/raw/master/tiktokmusic/${command}.mp3`)
-            await naze.sendMessage(m.chat, { audio: naze_dev, mimetype: 'audio/mp4', ptt: true }, { quoted: fdoc })     
-            break
-                        
             case 'mgroup': {
 goup = `╭──❍ *Group Menu*
 │
@@ -4396,8 +4159,8 @@ let buttons = [{ buttonId: 'simplemenu', buttonText: { displayText: '⬅️Back'
             case 'allmenu': {
             let ownernya = ownernomer + '@s.whatsapp.net'
             let me = m.sender
-            let ments = [ownernya, me]
-                anu = ` ∫ » *${ucapanWaktu}* « ✧\n⚠︎ *kak @${me.split('@')[0]}*\n♕︎ *Powered : *\n ∫ » *Creator : @${ownernya.split('@')[0]}*
+            let ments = [ownernya, me, ini_mark]
+                anu = ` ∫ » *${ucapanWaktu}* « ✧\n⚠︎ *kak @${me.split('@')[0]}*\n♕︎ *Powered : @${ini_mark.split('@')[0]}*\n ∫ » *Creator : @${ownernya.split('@')[0]}*
 ╭──❍ *Group Menu*
 │
 │⭔ ${prefix}linkgroup
@@ -4704,12 +4467,171 @@ _Donasi Ngab_\n_Jangan Ngarep Free Mulu_`
             naze.sendMessage(m.chat, { caption: `${anu}`, location: { jpegThumbnail: await reSize(faall, 300, 200)}, buttons: buttons, footer: nyoutube, mentions: ments})
             }
             break
-
+case 'sound1':
+case 'sound2':
+case 'sound3':
+case 'sound4':
+case 'sound5':
+case 'sound6':
+case 'sound7':
+case 'sound8':
+case 'sound9':
+case 'sound10':
+case 'sound11':
+case 'sound12':
+case 'sound13':
+case 'sound14':
+case 'sound15':
+case 'sound16':
+case 'sound17':
+case 'sound18':
+case 'sound19':
+case 'sound20':
+case 'sound21':
+case 'sound22':
+case 'sound23':
+case 'sound24':
+case 'sound25':
+case 'sound26':
+case 'sound27':
+case 'sound28':
+case 'sound29':
+case 'sound30':
+case 'sound31':
+case 'sound32':
+case 'sound33':
+case 'sound34':
+case 'sound35':
+case 'sound36':
+case 'sound37':
+case 'sound38':
+case 'sound39':
+case 'sound40':
+case 'sound41':
+case 'sound42':
+case 'sound43':
+case 'sound44':
+case 'sound45':
+case 'sound46':
+case 'sound47':
+case 'sound48':
+case 'sound49':
+case 'sound50':
+case 'sound51':
+case 'sound52':
+case 'sound53':
+case 'sound54':
+case 'sound55':
+case 'sound56':
+case 'sound57':
+case 'sound58':
+case 'sound59':
+case 'sound60':
+case 'sound61':
+case 'sound62':
+case 'sound63':
+case 'sound64':
+case 'sound65':
+case 'sound66':
+case 'sound67':
+case 'sound68':
+case 'sound69':
+case 'sound70':
+case 'sound71':
+case 'sound72':
+case 'sound73':
+case 'sound74':
+case 'sound75':
+case 'sound76':
+case 'sound77':
+case 'sound78':
+case 'sound79':
+case 'sound80':
+case 'sound81':
+case 'sound82':
+case 'sound83':
+case 'sound84':
+case 'sound85':
+case 'sound86':
+case 'sound87':
+case 'sound88':
+case 'sound89':
+case 'sound90':
+case 'sound91':
+case 'sound92':
+case 'sound93':
+case 'sound94':
+case 'sound95':
+case 'sound96':
+case 'sound97':
+case 'sound98':
+case 'sound99':
+case 'sound100':
+case 'sound101':
+case 'sound102':
+case 'sound103':
+case 'sound104':
+case 'sound105':
+case 'sound106':
+case 'sound107':
+case 'sound108':
+case 'sound109':
+case 'sound110':
+case 'sound111':
+case 'sound112':
+case 'sound113':
+case 'sound114':
+case 'sound115':
+case 'sound116':
+case 'sound117':
+case 'sound118':
+case 'sound119':
+case 'sound120':
+case 'sound121':
+case 'sound122':
+case 'sound123':
+case 'sound124':
+case 'sound125':
+case 'sound126':
+case 'sound127':
+case 'sound128':
+case 'sound129':
+case 'sound130':
+case 'sound131':
+case 'sound132':
+case 'sound133':
+case 'sound134':
+case 'sound135':
+case 'sound136':
+case 'sound137':
+case 'sound138':
+case 'sound139':
+case 'sound140':
+case 'sound141':
+case 'sound142':
+case 'sound143':
+case 'sound144':
+case 'sound145':
+case 'sound146':
+case 'sound147':
+case 'sound148':
+case 'sound149':
+case 'sound150':
+case 'sound151':
+case 'sound152':
+case 'sound153':
+case 'sound154':
+case 'sound155':
+case 'sound156':
+case 'sound157':
+case 'sound158':
+case 'sound159':
+case 'sound160':
+case 'sound161':
+naze_dev = await getBuffer(`https://github.com/DGXeon/Tiktokmusic-API/raw/master/tiktokmusic/${command}.mp3`)
+await naze.sendMessage(m.chat, { audio: naze_dev, mimetype: 'audio/mp4', ptt: true }, { quoted: m })     
+break
             default:
-                if (isCmd) {
-                    await m.reply(mess.comandodesconocido)
-                }
-                
                 if (budy.startsWith('=>')) {
                     if (!isCreator) return m.reply(mess.owner)
                     function Return(sul) {
@@ -4746,7 +4668,24 @@ _Donasi Ngab_\n_Jangan Ngarep Free Mulu_`
                     })
                 }
 			
-		
+		if (m.chat.endsWith('@s.whatsapp.net') && isCmd) {
+                    this.anonymous = this.anonymous ? this.anonymous : {}
+                    let room = Object.values(this.anonymous).find(room => [room.a, room.b].includes(m.sender) && room.state === 'CHATTING')
+                    if (room) {
+                        if (/^.*(next|leave|start)/.test(m.text)) return
+                        if (['.next', '.leave', '.stop', '.start', 'Cari Partner', 'Keluar', 'Lanjut', 'Stop'].includes(m.text)) return
+                        let other = [room.a, room.b].find(user => user !== m.sender)
+                        m.copyNForward(other, true, m.quoted && m.quoted.fromMe ? {
+                            contextInfo: {
+                                ...m.msg.contextInfo,
+                                forwardingScore: 0,
+                                isForwarded: true,
+                                participant: other
+                            }
+                        } : {})
+                    }
+                    return !0
+                }
 			
 		if (isCmd && budy.toLowerCase() != undefined) {
 		    if (m.chat.endsWith('broadcast')) return
