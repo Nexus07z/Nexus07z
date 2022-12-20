@@ -3693,10 +3693,10 @@ let alfamart = `628111500959@s.whatsapp.net`
                     get_result = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=${global.apilol}`, {...options })
                     fs.unlinkSync(filePath)
                     get_result = get_result.result
-                    m.reply(`*Bot aja bukan admin anj*`)
+                    m.reply(`*Artista/Grupo:* ${get_result.artists}\n\n*Tema:* ${get_result.title}\n\n*Álbum:* ${get_result.album}\n\n*Géneros:* ${get_result.genres}`)
                     
                 } catch (e) {
-                m.reply(`*Artista/Grupo:* ${get_result.artists}\n\n*Tema:* ${get_result.title}\n\n*Álbum:* ${get_result.album}\n\n*Géneros:* ${get_result.genres}`)
+                m.reply(`errorxd`)
                 }
                 
             }
