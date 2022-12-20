@@ -3678,7 +3678,7 @@ let alfamart = `628111500959@s.whatsapp.net`
                 if (!quoted) throw `falta etiqueta`
                 if (!/audio/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
                 naze.sendText(m.chat, mess.comandoespera, m)
-                let filePath = await naze.downloadAndSaveMediaMessage(qmsg)
+                let filePath = await naze.downloadAndSaveMediaMessage(quoted)
                 try {       
                     var form = new FormData();
                     var stats = fs.statSync(filePath);
