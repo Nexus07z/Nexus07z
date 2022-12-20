@@ -3675,8 +3675,7 @@ let alfamart = `628111500959@s.whatsapp.net`
             break
 
             case 'music?': {
-                if (!quoted) throw `falta etiqueta`
-                if (!/audio/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
+                
                 naze.sendText(m.chat, mess.comandoespera, m)
                 let media = await naze.downloadAndSaveMediaMessage(quoted)
                 m.reply(`${media}`)
