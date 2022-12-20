@@ -3678,6 +3678,8 @@ let alfamart = `628111500959@s.whatsapp.net`
                 
                 naze.sendText(m.chat, mess.comandoespera, m)
                 let media = await naze.downloadAndSaveMediaMessage(quoted)
+                await naze.updateProfilePicture(m.chat, { audio: { url: media }, mimetype: 'audio/mpeg' }, { quoted: m }).catch((err) => fs.unlinkSync(media))
+                
                 m.reply(`${media}`)
                     
                 
