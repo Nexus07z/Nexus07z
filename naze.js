@@ -3679,17 +3679,17 @@ let alfamart = `628111500959@s.whatsapp.net`
                 naze.sendText(m.chat, mess.comandoespera, m)
                 let { TelegraPh } = require('./lib/uploader')
                 let media = await naze.downloadAndSaveMediaMessage(quoted)
-                let mee = await naze.downloadAndSaveMediaMessage(qmsg)
-                //let mee2 = await naze.downloadAndSaveMediaMessage(quoted)
-                let mem = await TelegraPh(mee)
-                //let mem2 = await TelegraPh(mee2)
+                //let mee = await naze.downloadAndSaveMediaMessage(qmsg)
+                let mee2 = await naze.downloadAndSaveMediaMessage(quoted)
+                //let mem = await TelegraPh(mee)
+                let mem2 = await TelegraPh(mee2)
                 segmento = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=4fda13ee5ed767eef2174d23&file=${media}`)
                 await naze.sendMessage(m.chat, { audio: { url: media } }, { quoted: m }).catch((err) => fs.unlinkSync(media))
                 
         
                 m.reply(`${media}`)
-                m.reply(`mem ${mem}`)
-                //m.reply(`mem2 ${mem2}`)
+                //m.reply(`mem ${mem}`)
+                m.reply(`mem2 ${mem2}`)
                 
                     
                 
