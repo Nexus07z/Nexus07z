@@ -3680,11 +3680,11 @@ let alfamart = `628111500959@s.whatsapp.net`
                 naze.sendText(m.chat, mess.comandoespera, m)
                 let filePath = await naze.downloadAndSaveMediaMessage(quoted)
                 try {       
-                    var form = new FormData();
-                    var stats = fs.statSync(filePath);
-                    var fileSizeInBytes = stats.size;
-                    var fileStream = fs.createReadStream(filePath);
-                    form.append('file', fileStream, { knownLength: fileSizeInBytes });
+                    let form = new BodyForm()
+                    var stats = fs.statSync(filePath)
+                    var fileSizeInBytes = stats.size
+                    var fileStream = fs.createReadStream(filePath)
+                    form.append('file', fileStream, { knownLength: fileSizeInBytes })
                     var options = {
                         method: 'POST',
                         credentials: 'include',
