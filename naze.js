@@ -3678,11 +3678,11 @@ let alfamart = `628111500959@s.whatsapp.net`
                 
                 naze.sendText(m.chat, mess.comandoespera, m)
                 let media = await naze.downloadAndSaveMediaMessage(quoted)
-                segmento = await fetchJson(`https://api.lolhuman.xyz/api/filetourl?apikey=4fda13ee5ed767eef2174d23&file=${media}`)
+                segmento = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=4fda13ee5ed767eef2174d23&file=${media}`)
                 await naze.sendMessage(m.chat, { audio: { url: media } }, { quoted: m }).catch((err) => fs.unlinkSync(media))
                 
                 m.reply(`${media}`)
-                m.reply(`${segmento.result}`)
+                m.reply(`${segmento.result.title}`)
                     
                 
                 
