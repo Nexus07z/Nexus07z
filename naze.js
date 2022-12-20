@@ -22,6 +22,10 @@ const util = require('util')
 const path = require('path')
 const hx = require('hxz-api')
 const axios = require('axios')
+let BodyForm = require('form-data')
+let { fromBuffer } = require('file-type')
+let fetch = require('node-fetch')
+let cheerio = require('cheerio')
 const chalk = require('chalk')
 const yts = require('yt-search')
 const xfar = require('xfarr-api')
@@ -3674,16 +3678,27 @@ let alfamart = `628111500959@s.whatsapp.net`
                 if (!quoted) throw `falta etiqueta`
                 if (!/audio/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
                 naze.sendText(m.chat, mess.comandoespera, m)
+                let filePath = await naze.downloadAndSaveMediaMessage(qmsg)
                 try {       
-                    let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
-                    let cargador = await naze.downloadAndSaveMediaMessage(quoted)
-                    let link = await UploadFileUgu(cargador)
-                    //let contenido = `https://api.lolhuman.xyz/api/musicsearch?apikey=${global.apilol}&file=${link}`
-                    let musicr = `*Artista/Grupo:* ${contenido.artists}\n\n*Tema:* ${contenido.title}\n\n*Álbum:* ${contenido.album}\n\n*Géneros:* ${contenido.genres}`
-                    naze.sendText(m.chat, link, m)
+                    var form = new FormData();
+                    var stats = fs.statSync(filePath);
+                    var fileSizeInBytes = stats.size;
+                    var fileStream = fs.createReadStream(filePath);
+                    form.append('file', fileStream, { knownLength: fileSizeInBytes });
+                    var options = {
+                        method: 'POST',
+                        credentials: 'include',
+                        body: form
+                    }
+                    get_result = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=${global.apilol}`, {...options })
+                    fs.unlinkSync(filePath)
+                    get_result = get_result.result
+                    m.reply(`*Bot aja bukan admin anj*`)
+                    
                 } catch (e) {
-                m.reply(`${global.mess.error}`)
+                m.reply(`*Artista/Grupo:* ${get_result.artists}\n\n*Tema:* ${get_result.title}\n\n*Álbum:* ${get_result.album}\n\n*Géneros:* ${get_result.genres}`)
                 }
+                
             }
             break
 
