@@ -3671,16 +3671,42 @@ let alfamart = `628111500959@s.whatsapp.net`
             }
             break
 
-            case 'music?': {
-                
-                naze.sendText(m.chat, mess.comandoespera, m)
-                let { floNime } = require('./lib/uploader')
-                let media = await naze.downloadAndSaveMediaMessage(quoted)
-                let anu = await floNime(media)
-                m.reply(anu)
-                
+            case 'musicd': {
+                m.reply(`Memproses...`)
+		        let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
+                let media = await naze.downloadAndSaveMediaMessage(qmsg)
+                let anu = await UploadFileUgu(media)
+                const wht = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=${lolapi}&file=${anu}`)
+                console.log(wht)
+					/*let teks1 = `⭔ *Artis :*\n`
+					for (let i of wht.result.artists) {
+					teks1 += `${i}\n`
+                    }
+					let teks2 = `⭔ *Genre :*\n`
+					for (let i of wht.result.genres) {
+					teks2 += `${i}\n`
+                    }*/
+				teksnya = `*Musik Ditemukan*\n\n*Judul :* ${wht.result.title}\n*Artis :* ${wht.result.artists[0]}\n*Album :* ${wht.result.album}\n*Genre :* ${wht.result.genres[0]}\n*Rilis :* ${wht.result.release}`
+				m.reply(teksnya)
+                await fs.unlinkSync(media)
             }
             break
+
+            case 'musicc': {
+                let respond = `Kirim/reply image/sticker dengan caption ${prefix + command} text1|text2`
+                if (!/image/.test(mime)) throw respond
+                if (!text) throw respond
+                m.reply(mess.wait)
+                atas = text.split('|')[0] ? text.split('|')[0] : '-'
+                bawah = text.split('|')[1] ? text.split('|')[1] : '-'
+                let dwnld = await naze.downloadMediaMessage(qmsg)
+                let { floNime } = require('./lib/uploader')
+                let fatGans = await floNime(dwnld)
+                let smeme = `https://api.memegen.link/images/custom/${encodeURIComponent(atas)}/${encodeURIComponent(bawah)}.png?background=${fatGans.result.url}`
+                let FaTiH = await naze.sendImageAsSticker(m.chat, smeme, m, { packname: global.packname, author: global.auhor })
+                await fs.unlinkSync(FaTiH)
+                }
+               break  
 
         
 	    case 'getmusic': {
