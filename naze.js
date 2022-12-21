@@ -2130,7 +2130,7 @@ break
                     }
                 break
 
-                case 'tourl2': case 'upload': {
+                case 'tourl2': case 'upload2': {
 
                 
                 
