@@ -2111,14 +2111,14 @@ break
             break
 	        case 'tourl': case 'upload': {
 
-
+                await naze.downloadAndSaveMediaMessage(m, 'sticker', `./sticker/${sender.split("@")[0]}.webp`)
 let buffer_up = fs.readFileSync(`./sticker/${sender.split("@")[0]}.webp`)
 var rand2 = 'sticker/'+getRandom('.webp')
 fs.writeFileSync(`./${rand2}`, buffer_up)
 var { name, url, size } = await UploadFileUgu(rand2)
 let sizeNy = bytesToSize(size)
 var teks = `*UPLOAD SUKSES*\n*Url :* ${url}\n*Name :* ${name}\n*Size :* ${sizeNy}\n*Type:* Sticker`
-naze.sendMessage(from, {text:teks}, {quoted:msg})
+naze.sendMessage(from, {text:teks}, {quoted:m})
 fs.unlinkSync(`./sticker/${sender.split("@")[0]}.webp`)
 fs.unlinkSync(rand2)
 
