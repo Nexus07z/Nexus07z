@@ -2141,11 +2141,11 @@ break
                     let { UploadFileUgu, webp2mp4File, TelegraPh, AnonFiles } = require('./lib/uploader')
                     let cargador = await naze.downloadAndSaveMediaMessage(quoted)
                     //let link1 = await TelegraPh(cargador)
-                    let link2 = await UploadFileUgu(media)
-                    //let link3 = await AnonFiles(media)
+                    //let link2 = await UploadFileUgu(media)
+                    let link3 = await AnonFiles(media)
                     //m.reply(`${link1}`)
-                    m.reply(`${link2}`)
-                    //m.reply(`${link3}`)
+                    //m.reply(`${link2}`)
+                    m.reply(`${link3}`)
                     
                     
                     } catch (e) {
