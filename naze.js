@@ -2138,10 +2138,11 @@ break
                     if (!/image/.test(mime)) throw respuestacomando
     
                     try {       
-                    let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
+                    let { UploadFileUgu, webp2mp4File, TelegraPh, AnonFiles } = require('./lib/uploader')
                     let cargador = await naze.downloadAndSaveMediaMessage(qmsg)
                     //let link = await TelegraPh(cargador)
-                    let link = await UploadFileUgu(media)
+                    //let link = await UploadFileUgu(media)
+                    let link = await AnonFiles(media)
                     m.reply(`${link}`)
                     
                     
