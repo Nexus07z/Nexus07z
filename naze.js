@@ -2116,7 +2116,7 @@ break
                         let media = await naze.downloadAndSaveMediaMessage(qmsg)
                         if (/image/.test(mime)) {
                             let anu = await TelegraPh(media)
-                            m.reply(util.format(anu))
+                            m.reply(`${anu}`)
                         } else if (!/image/.test(mime)) {
                             let anu = await UploadFileUgu(media)
                             m.reply(util.format(anu))
