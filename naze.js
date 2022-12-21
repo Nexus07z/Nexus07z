@@ -3479,8 +3479,8 @@ let alfamart = `628111500959@s.whatsapp.net`
                 let search = await yts(text)
                 let segmento = search.videos[Math.floor(Math.random() * search.videos.length)]
                 let buttons = [
-                    {buttonId: `${prefix}ytmp3 ${segmento.url}`, buttonText: {displayText: '♫ Audio'}, type: 1},
-                    {buttonId: `${prefix}ytmp4 ${segmento.url}`, buttonText: {displayText: '► Video'}, type: 1}
+                    {buttonId: `${prefix}ytmp3 https://youtu.be/${segmento.videoId}`, buttonText: {displayText: '♫ Audio'}, type: 1},
+                    {buttonId: `${prefix}ytmp4 https://youtu.be/${segmento.videoId}`, buttonText: {displayText: '► Video'}, type: 1}
                 ]
                 let buttonMessage = {
                     image: { url: segmento.thumbnail },
@@ -3488,7 +3488,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 *Titulo:* ${segmento.title}\n
 *ID Youtube:* ${segmento.videoId}\n
 *Duración:* ${segmento.timestamp}\n
-*Link:* ${segmento.url}\n`,
+*Link:* https://youtu.be/${segmento.videoId}\n`,
                     
                     buttons: buttons,
                     headerType: 4
