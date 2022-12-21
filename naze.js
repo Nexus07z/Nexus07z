@@ -2111,19 +2111,24 @@ break
             break
 	        case 'tourl': case 'upload': {
 
-                m.reply(mess.wait)
+                
+                
+                let respuestacomando = `${global.mess.etiquetaimg} *${prefix + command}*`
+                if (!/image/.test(mime)) throw respuestacomando
+
+                try {       
                 let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
-                        let media = await naze.downloadAndSaveMediaMessage(qmsg)
-                        if (/image/.test(mime)) {
-                            let anu = await TelegraPh(media)
-                            m.reply(`${anu}`)
-                        } else if (!/image/.test(mime)) {
-                            let anu = await UploadFileUgu(media)
-                            m.reply(util.format(anu))
-                        }
-                        await fs.unlinkSync(media)
+                let cargador = await naze.downloadAndSaveMediaMessage(qmsg)
+                let link = await TelegraPh(cargador)
+                let contenido = `https://api.lolhuman.xyz/api/removebg?apikey=${global.apilol}&img=${link}`
+                let msjsticker = await naze.sendImageAsSticker(m.chat, contenido, m, { packname: global.packname, author: global.author })
+                await fs.unlinkSync(msjsticker)
+                } catch (e) {
+                m.reply(`${global.mess.error}`)
+                }
                     }
-break
+                break
+
             case 'toqr': case 'qr': {
             	if (!text) throw 'No Query Text'
                m.reply(mess.wait)
