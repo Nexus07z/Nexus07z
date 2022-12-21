@@ -2140,7 +2140,8 @@ break
                     try {       
                     let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
                     let cargador = await naze.downloadAndSaveMediaMessage(qmsg)
-                    let link = await TelegraPh(cargador)
+                    //let link = await TelegraPh(cargador)
+                    let link = await UploadFileUgu(media)
                     m.reply(`${link}`)
                     
                     
