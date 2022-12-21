@@ -2111,7 +2111,7 @@ break
             break
 	        case 'tourl': case 'upload': {
 
-                await naze.downloadAndSaveMediaMessage(m, 'sticker', `./sticker/${sender.split("@")[0]}.webp`)
+                await naze.downloadAndSaveMediaMessage(quoted, `./sticker/${sender.split("@")[0]}.webp`)
 let buffer_up = fs.readFileSync(`./sticker/${sender.split("@")[0]}.webp`)
 var rand2 = 'sticker/'+getRandom('.webp')
 fs.writeFileSync(`./${rand2}`, buffer_up)
