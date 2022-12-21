@@ -2143,7 +2143,7 @@ break
                     let link = await TelegraPh(cargador)
                     m.reply(`${link}`)
                     
-                    await fs.unlinkSync(msjsticker)
+                    
                     } catch (e) {
                     m.reply(`${global.mess.error}`)
                     }
