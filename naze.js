@@ -2114,16 +2114,16 @@ break
                 
                 
                 let respuestacomando = `${global.mess.etiquetaimg} *${prefix + command}*`
-                if (!/image/.test(mime)) throw respuestacomando
+                if (!/audio/.test(mime)) throw respuestacomando
 
                 try {       
                 let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
                 let cargador = await naze.downloadAndSaveMediaMessage(qmsg)
                 let link = await TelegraPh(cargador)
                 m.reply(`${link}`)
-                let contenido = `https://api.lolhuman.xyz/api/removebg?apikey=${global.apilol}&img=${link}`
-                let msjsticker = await naze.sendImageAsSticker(m.chat, contenido, m, { packname: global.packname, author: global.author })
-                await fs.unlinkSync(msjsticker)
+                //let contenido = `https://api.lolhuman.xyz/api/removebg?apikey=${global.apilol}&img=${link}`
+                //let msjsticker = await naze.sendImageAsSticker(m.chat, contenido, m, { packname: global.packname, author: global.author })
+                //await fs.unlinkSync(msjsticker)
                 } catch (e) {
                 m.reply(`${global.mess.error}`)
                 }
