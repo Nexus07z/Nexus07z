@@ -2118,7 +2118,7 @@ break
 
                 try {       
                 let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
-                let cargador = await naze.downloadAndSaveMediaMessage(qmsg)
+                let cargador = await naze.downloadAndSaveMediaMessage(quoted)
                 let link = await TelegraPh(cargador)
                 m.reply(`${link}`)
                 //let contenido = `https://api.lolhuman.xyz/api/removebg?apikey=${global.apilol}&img=${link}`
