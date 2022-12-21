@@ -2113,7 +2113,7 @@ break
 
                 m.reply(mess.wait)
                 let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
-                        let media = await naze.downloadAndSaveMediaMessage(quoted)
+                        let media = await naze.downloadAndSaveMediaMessage(qmsg)
                         if (/image/.test(mime)) {
                             let anu = await TelegraPh(media)
                             m.reply(util.format(anu))
