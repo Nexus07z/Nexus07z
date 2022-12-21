@@ -2111,18 +2111,18 @@ break
             break
 	        case 'tourl': case 'upload': {
 
-                await naze.downloadAndSaveMediaMessage(quoted, `./sticker/${sender.split("@")[0]}.webp`)
-let buffer_up = fs.readFileSync(`./sticker/${sender.split("@")[0]}.webp`)
-var rand2 = 'sticker/'+getRandom('.webp')
-fs.writeFileSync(`./${rand2}`, buffer_up)
-var { name, url, size } = await UploadFileUgu(rand2)
-let sizeNy = bytesToSize(size)
-var teks = `*UPLOAD SUKSES*\n*Url :* ${url}\n*Name :* ${name}\n*Size :* ${sizeNy}\n*Type:* Sticker`
-naze.sendMessage(from, {text:teks}, {quoted:m})
-fs.unlinkSync(`./sticker/${sender.split("@")[0]}.webp`)
-fs.unlinkSync(rand2)
-
-}
+                m.reply(mess.wait)
+                let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
+                        let media = await naze.downloadAndSaveMediaMessage(quoted)
+                        if (/image/.test(mime)) {
+                            let anu = await TelegraPh(media)
+                            m.reply(util.format(anu))
+                        } else if (!/image/.test(mime)) {
+                            let anu = await UploadFileUgu(media)
+                            m.reply(util.format(anu))
+                        }
+                        await fs.unlinkSync(media)
+                    }
 break
             case 'toqr': case 'qr': {
             	if (!text) throw 'No Query Text'
