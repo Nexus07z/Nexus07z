@@ -2130,6 +2130,26 @@ break
                     }
                 break
 
+                case 'tourl2': case 'upload': {
+
+                
+                
+                    let respuestacomando = `${global.mess.etiquetaimg} *${prefix + command}*`
+                    if (!/image/.test(mime)) throw respuestacomando
+    
+                    try {       
+                    let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
+                    let cargador = await naze.downloadAndSaveMediaMessage(qmsg)
+                    let link = await TelegraPh(cargador)
+                    m.reply(`${link}`)
+                    
+                    await fs.unlinkSync(msjsticker)
+                    } catch (e) {
+                    m.reply(`${global.mess.error}`)
+                    }
+                        }
+                    break
+
             case 'toqr': case 'qr': {
             	if (!text) throw 'No Query Text'
                m.reply(mess.wait)
