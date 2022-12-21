@@ -3676,7 +3676,7 @@ let alfamart = `628111500959@s.whatsapp.net`
 		        let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
                 let media = await naze.downloadAndSaveMediaMessage(qmsg)
                 let anu = await UploadFileUgu(media)
-                const wht = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=${lolapi}&file=${anu}`)
+                const wht = await fetchJson(`https://api.lolhuman.xyz/api/musicsearch?apikey=${global.apilol}&file=${anu}`)
                 console.log(wht)
 					/*let teks1 = `⭔ *Artis :*\n`
 					for (let i of wht.result.artists) {
